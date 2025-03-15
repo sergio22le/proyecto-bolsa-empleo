@@ -1,0 +1,16 @@
+# Ignorar archivos de Laravel
+/backend/vendor/
+/backend/node_modules/
+/backend/storage/
+/backend/.env
+/backend/.env.example
+
+# Ignorar archivos de React + Vite
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env
+/frontend/.DS_Store
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
