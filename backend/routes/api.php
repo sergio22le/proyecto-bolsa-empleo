@@ -3,11 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\DemandanteController;
 
-Route::get('/empresas', [EmpresaController::class, "index"]);
-Route::get("/empresas/{id}", [EmpresaController::class, "show"]);
-Route::post("/empresas", [EmpresaController::class, "store"]);
+//Empresas
 Route::patch("/empresas/validate={id}", [EmpresaController::class, "validate"]);
-Route::patch("/empresas/{id}", [EmpresaController::class, "update"]);
-Route::delete("/empresas/{id}", [EmpresaController::class, "destroy"]);
-
+Route::resource('empresas', EmpresaController::class);
+//Demandante
+Route::resource('demandantes', DemandanteController::class);
