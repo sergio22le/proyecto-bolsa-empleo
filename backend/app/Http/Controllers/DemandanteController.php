@@ -29,7 +29,7 @@ class DemandanteController extends Controller
             'ape2' => 'required|string|max:45',
             'tel_movil' => 'required|digits:9',
             'email' => 'required|email|max:45',
-            'situacion' => 'required|digits_between:1,4'
+            'situacion' => 'required|in:0,1'
         ]);
 
         if($validator->fails()){
@@ -106,7 +106,7 @@ class DemandanteController extends Controller
             'ape2' => 'string|max:45',
             'tel_movil' => 'digits:9',
             'email' => 'email|max:45',
-            'situacion' => 'digits_between:1,4'
+            'situacion' => 'required|in:0,1'
         ]);
 
         if($validator->fails()){
@@ -152,7 +152,7 @@ class DemandanteController extends Controller
         $demandante->delete();
 
         $data = [
-            "empresa" => "Demandante eliminado",
+            "message" => "Demandante eliminado",
             "status" => 200
         ];
     

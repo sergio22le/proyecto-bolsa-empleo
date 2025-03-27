@@ -55,7 +55,7 @@ class EmpresaController extends Controller
         $empresa->delete();
 
         $data = [
-            "empresa" => "Empresa eliminada",
+            "message" => "Empresa eliminada",
             "status" => 200
         ];
     
@@ -155,10 +155,8 @@ class EmpresaController extends Controller
 
     public function validate(Request $request, $id)
     {
-        //Valida el usuario que lo hace
         $admin = $request->username;
-        //TODO: Comprobacion de que admin es realmente admin
-        if($admin!="admin")
+        if($admin!="centro")
         {
             $data = [
                 "message" => "Usuario no autorizado",
@@ -167,7 +165,6 @@ class EmpresaController extends Controller
             return response()->json($data, 403);
         }
 
-        //Busca la empresa
         $empresa = Empresa::find($id);
         if(!$empresa) {
             $data = [
