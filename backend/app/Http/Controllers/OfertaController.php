@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApuntadoOferta;
+use App\Models\Demandante;
 use App\Models\Oferta;
+use App\Models\TituloOferta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -164,5 +167,158 @@ class OfertaController extends Controller
         ];
     
         return response()->json($data, 200);
+    }
+
+    public function addTituloOferta(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_oferta' => 'required|integer|exists:oferta,id',
+            'id_titulo' => 'required|integer|exists:titulos,id'
+        ]);
+
+        if($validator->fails()){
+            $data = [
+                "message" => "Error en la validación de datos",
+                "errors" => $validator->errors(),
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        $oferta_titulo = TituloOferta::where('id_oferta', $request->id_oferta)
+                                  ->where('id_titulo', $request->id_titulo);
+
+        if($oferta_titulo->first())
+        {
+            $data = [
+                "message" => "La oferta ya contiene el título",
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        $new_oferta_titulo = TituloOferta::create([
+            "id_oferta" => $request->id_oferta,
+            "id_titulo" => $request->id_titulo
+        ]);
+
+        $data = [
+            "message" => "Título añadido a la oferta",
+            "titulo_oferta" => $new_oferta_titulo,
+            "status" => 200
+        ];
+        return response()->json($data, 200);
+    }
+
+    public function inscribirOferta(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_oferta' => 'required|integer|exists:oferta,id',
+            'id_demandante' => 'required|integer|exists:demante,id'
+        ]);
+
+        if($validator->fails()){
+            $data = [
+                "message" => "Error en la validación de datos",
+                "errors" => $validator->errors(),
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+        
+        $oferta = Oferta::find($request->id_oferta);
+
+        if (!$oferta) {
+            $data = [
+                "message" => "Oferta no encontrada",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $demandante = Demandante::find($request->id_demandante);
+
+        if (!$demandante) {
+            $data = [
+                "message" => "Demandante no encontrado",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $apuntado = ApuntadoOferta::where('id_oferta', $request->id_oferta)
+                                  ->where('id_demandante', $request->id_demandante)
+                                  ->first();
+
+        if ($apuntado) {
+            $data = [
+                "message" => "El demandante ya está apuntado a la oferta",
+                "status" => 404
+            ];
+            return response()->json($data, 400);
+        }
+
+        $apuntadoOferta = ApuntadoOferta::create([
+            'id_oferta' => $request->id_oferta,
+            'id_demandante' => $request->id_demandante,
+            'adjudicada' => "No",
+            'fecha' => now()
+            
+        ]);
+
+        $data = [
+            "message" => "Demandante apuntado a la oferta",
+            "apuntado" => $apuntadoOferta,
+            "oferta" => $oferta,
+            "demdandante" => $demandante,
+            "status" => 201
+        ];
+        return response()->json($data, 201);
+    }
+
+    public function adjudicarOferta(Request $request)
+    {
+        $oferta = Oferta::find($request->id_oferta);
+
+        if (!$oferta) {
+            $data = [
+                "message" => "Oferta no encontrada",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $demandante = Demandante::find($request->id_demandante);
+
+        if (!$demandante) {
+            $data = [
+                "message" => "Demandante no encontrado",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $apuntado = ApuntadoOferta::where('id_oferta', $request->id_oferta)
+                                  ->where('id_demandante', $request->id_demandante);
+
+        if (!$apuntado->first()) {
+            $data = [
+                "message" => "Demandante no apuntado a la oferta",
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        if ($apuntado->first()->adjudicada == "Sí") {
+            $data = [
+                "message" => "Demandante ya adjudicado",
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        $apuntado->update(['adjudicada' => "Sí"]);
+
+        return response()->json(["message" => "Oferta adjudicada al demandante", "status" => 200], 200);
     }
 }

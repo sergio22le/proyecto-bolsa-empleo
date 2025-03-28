@@ -16,6 +16,9 @@ Route::resource('demandantes.titulos', TituloDemandanteController::class);
 //Demandantes
 Route::resource('demandantes', DemandanteController::class);
 //Ofertas
+Route::post('/ofertas/titulo/', [OfertaController::class, 'addTituloOferta']);
+Route::post('/ofertas/iscribir/', [OfertaController::class, 'inscribirOferta']);
+Route::patch('/ofertas/adjudicar/', [OfertaController::class, 'adjudicarOferta']);
 Route::resource('ofertas', OfertaController::class);
 //Titulos
 Route::resource('titulos', TituloController::class);
