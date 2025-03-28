@@ -17,12 +17,12 @@ const RegistroDemandante = () => {
   });
 
   // Manejar cambios en los campos de entrada
-  const handleChange = (e) => {
+  const actualizarDatos = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Manejar el envío del formulario
-  const handleSubmit = async (e) => {
+  const enviarDatos = async (e) => {
     e.preventDefault();
 
     // Verificar que las contraseñas coincidan
@@ -70,20 +70,20 @@ const RegistroDemandante = () => {
     <div className="register-container">
       <h2>Registro de Demandante</h2>
 
-      <form onSubmit={handleSubmit} className="register-form">
-        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
-        <input type="text" name="primerApellido" placeholder="Primer Apellido" value={formData.primerApellido} onChange={handleChange} required />
-        <input type="text" name="segundoApellido" placeholder="Segundo Apellido" value={formData.segundoApellido} onChange={handleChange} required />
-        <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={handleChange} required />
-        <input type="text" name="dni" placeholder="DNI" value={formData.dni} onChange={handleChange} required />
-        <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Correo Electrónico" value={formData.email} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={handleChange} required />
-        <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={handleChange} required />
+      <form onSubmit={enviarDatos} className="register-form">
+        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
+        <input type="text" name="primerApellido" placeholder="Primer Apellido" value={formData.primerApellido} onChange={actualizarDatos} required />
+        <input type="text" name="segundoApellido" placeholder="Segundo Apellido" value={formData.segundoApellido} onChange={actualizarDatos} required />
+        <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
+        <input type="text" name="dni" placeholder="DNI" value={formData.dni} onChange={actualizarDatos} required />
+        <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={actualizarDatos} required />
+        <input type="email" name="email" placeholder="Correo Electrónico" value={formData.email} onChange={actualizarDatos} required />
+        <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
+        <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required />
 
         {/* Selector de Situación Laboral */}
         <label>Situación Laboral:</label>
-        <select className="select-situacion" name="situacionLaboral" value={formData.situacionLaboral} onChange={handleChange}>
+        <select className="select-situacion" name="situacionLaboral" value={formData.situacionLaboral} onChange={actualizarDatos}>
           <option value="con empleo">Con empleo</option>
           <option value="sin empleo">Sin empleo</option>
         </select>

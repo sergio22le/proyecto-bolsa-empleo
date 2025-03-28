@@ -14,12 +14,12 @@ const RegistroEmpresa = () => {
   });
 
   // Manejar cambios en los campos de entrada
-  const handleChange = (e) => {
+  const actualizarDatos = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Manejar el envío del formulario
-  const handleSubmit = async (e) => {
+  const enviarDatos = async (e) => {
     e.preventDefault();
 
     // Verificar que las contraseñas coincidan
@@ -64,14 +64,14 @@ const RegistroEmpresa = () => {
     <div className="register-container">
       <h2>Registro de Empresa</h2>
 
-      <form onSubmit={handleSubmit} className="register-form">
-        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
-        <input type="text" name="cif" placeholder="CIF" value={formData.cif} onChange={handleChange} required />
-        <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={handleChange} required />
-        <input type="localidad" name="localidad" placeholder="Localidad" value={formData.localidad} onChange={handleChange} required />
-        <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={handleChange} required />
-        <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={handleChange} required />
+      <form onSubmit={enviarDatos} className="register-form">
+        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
+        <input type="text" name="cif" placeholder="CIF" value={formData.cif} onChange={actualizarDatos} required />
+        <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={actualizarDatos} required />
+        <input type="localidad" name="localidad" placeholder="Localidad" value={formData.localidad} onChange={actualizarDatos} required />
+        <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
+        <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
+        <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required />
 
         <button type="submit">Registrarse</button>
       </form>
