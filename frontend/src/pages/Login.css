@@ -1,0 +1,39 @@
+.login-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 50px;
+}
+
+.form-demandante, .form-empresa {
+  background: #f4f4f4;
+  padding: 10px 40px 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 40%;
+  text-align: center;
+}
+
+.login-form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+}
+
+button.register {
+  background-color: #28a745;
+  margin-top: 10px;
+}
