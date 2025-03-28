@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogInController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
@@ -22,3 +23,5 @@ Route::patch('/ofertas/adjudicar/', [OfertaController::class, 'adjudicarOferta']
 Route::resource('ofertas', OfertaController::class);
 //Titulos
 Route::resource('titulos', TituloController::class);
+//Login
+Route::post('/login', [LogInController::class, 'login']);
