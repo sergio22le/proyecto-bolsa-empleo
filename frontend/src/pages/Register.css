@@ -1,0 +1,35 @@
+/* Estilos generales */
+.register-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 60%;
+    margin: auto;
+  }
+  
+  .register-form input {
+    margin: auto;
+    width: 80%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .register-form button {
+    width: 30%;
+    margin-top: 10px;
+    padding: 10px;
+    background: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 3rem;
+  }
+  
+  .register-form button:hover {
+    background: darkblue;
+  }
+  
