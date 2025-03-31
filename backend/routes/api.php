@@ -8,10 +8,13 @@ use App\Http\Controllers\DemandanteController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\TituloController;
 use App\Http\Controllers\TituloDemandanteController;
+use App\Http\Controllers\UserController;
+
 
 //Empresas
 Route::patch('/empresas/validate={id}', [EmpresaController::class, 'validate']);
 Route::resource('empresas', EmpresaController::class);
+
 //Titulos demandantes
 Route::resource('demandantes.titulos', TituloDemandanteController::class);
 //Demandantes
@@ -23,5 +26,6 @@ Route::patch('/ofertas/adjudicar/', [OfertaController::class, 'adjudicarOferta']
 Route::resource('ofertas', OfertaController::class);
 //Titulos
 Route::resource('titulos', TituloController::class);
-//Login
-Route::post('/login', [LogInController::class, 'login']);
+//Usuarios
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);

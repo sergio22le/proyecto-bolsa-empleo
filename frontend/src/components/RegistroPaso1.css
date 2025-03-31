@@ -1,0 +1,67 @@
+.registro-body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+.registro-body h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.form-registro {
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin: auto;
+}
+
+.form-registro label {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.form-registro input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 60%;
+    margin-bottom: 20px;
+}
+    
+.form-registro button {
+    background-color: #28a745;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+    
+button:hover {
+    background-color: #0056b3;
+    color:white;
+}
+
+.seleccion-usuario button {
+    background-color: white;
+    color: #9c39d4;
+    border: 1px solid #9c39d4;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .activo {
+    background-color: #9c39d4 !important;
+    color: white !important;
+  }

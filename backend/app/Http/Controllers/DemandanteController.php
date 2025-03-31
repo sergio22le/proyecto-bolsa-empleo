@@ -22,6 +22,7 @@ class DemandanteController extends Controller
 
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'dni' => 'required|string|size:9',
             'nombre' => 'required|string|max:45',

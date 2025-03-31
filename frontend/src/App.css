@@ -1,9 +1,16 @@
 #root {
-  max-width: 1280px;
-  margin: auto;
-  padding: 2rem;
-  text-align: center;
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -42,4 +49,54 @@
   color: #888;
 }
 
+.div-header {
+  width: 100%;
+  background-color: #f1f1f1;
+}
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 30px;
+  gap: 20px;
+  color: #333;
+  margin-top: 0;
+  border-bottom: 1px solid #ddd;
+}  
+
+.botones-sesion {
+  display: flex;
+  flex-direction: row;
+  justify-self: start;
+  gap: 20px;
+}
+
+.cerrar-sesion {
+  background-color: #9c39d4;
+  width: fit-content;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.icono-usuario {
+  background-color: #bbbbbb;
+  border: 2px solid black;
+  border-radius: 100px;
+  padding: 10px 15px;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.footer {
+  text-align: center;
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 10px 0;
+  margin-top: 50px;
+  width: 100%;
+  bottom: 0;
+  border-top: 1px solid #ddd;
+}
