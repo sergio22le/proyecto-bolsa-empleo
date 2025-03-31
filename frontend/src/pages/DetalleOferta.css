@@ -1,0 +1,45 @@
+.body-detalle-oferta {
+    text-align: center;
+}
+
+.body-detalle-oferta h1 {
+    text-align: left;
+}
+
+.container-detalle-oferta {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 75%;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 50px 30px 50px;
+    margin-bottom: 50px;
+}
+
+.datos-oferta {
+    text-align: left;
+}
+
+.datos-oferta h3 {
+    margin-bottom: 0px;
+}
+
+.datos-oferta div {
+    margin-bottom: 50px;
+}
+
+.container-detalle-oferta a {
+    color: white;
+    text-decoration: none;
+}
+
+.boton-apuntarme button {
+    background-color: #9c39d4;
+}
+
+.volver {
+    text-align: center;
+    margin: 50px;
+}

@@ -1,0 +1,61 @@
+.container-oferta{
+    text-align: left;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.container-oferta h2 {
+    padding-left: 30px;
+}
+
+.oferta {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 90%;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.condiciones-oferta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+    width: 80%;
+}
+
+.fecha-publi {
+    width: 20%;
+}
+
+.empresa {
+    width: 40%;
+}
+
+.contrato {
+    width: 20%;
+}
+
+.n-puestos {
+    width: 20%;
+}
+
+.oferta button {
+    background-color: #9c39d4;
+    margin-top: 8px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+}
+
+.oferta a {
+    color: white;
+    text-decoration: none;
+}
