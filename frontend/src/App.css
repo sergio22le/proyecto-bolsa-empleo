@@ -64,7 +64,29 @@ body {
   color: #333;
   margin-top: 0;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 50px;
 }  
+
+.usuario-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  gap: 15px;
+}
+
+.div-sesion button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #9c39d4;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.enlace-perfil {
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
 
 .botones-sesion {
   display: flex;

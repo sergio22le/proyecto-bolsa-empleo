@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Empresa;
+use App\Models\Demandante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,21 +17,81 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        // Validar los datos
-        $request->validate([
-            'usuario' => 'required|string|unique:usuarios',
-            'password' => 'required|string|min:6',
-        ]);
+        DB::beginTransaction();
+        try {
+            if ($request->tipo === 'demandante') {
+                $request->validate([
+                    'usuario' => 'required|string|unique:usuarios',
+                    'password' => 'required|string|min:6',
+                    'dni' => 'required|string|size:9',
+                    'nombre' => 'required|string|max:45',
+                    'ape1' => 'required|string|max:45',
+                    'ape2' => 'required|string|max:45',
+                    'tel_movil' => 'required|digits:9',
+                    'email' => 'required|email|max:45',
+                    'situacion' => 'required|in:0,1'
+                ]);
+    
+                $user = User::create([
+                    'usuario' => $request->usuario,
+                    'password' => Hash::make($request->password),
+                    'tipo' => $request->tipo,
+                ]);
+    
+                $demandante = Demandante::create([
+                    'dni' => $request->dni,
+                    'nombre' => $request->nombre,
+                    'ape1' => $request->ape1,
+                    'ape2' => $request->ape2,
+                    'tel_movil' => $request->tel_movil,
+                    'email' => $request->email,
+                    'situacion' => $request->situacion,
+                ]);
+    
+                DB::table('usuario_demandante')->insert([
+                    'idUsuario' => $user->id,
+                    'idDemandante' => $demandante->id,
+                ]);
 
-        // Crear usuario con contraseña encriptada
-        $user = User::create([
-            'usuario' => $request->usuario,
-            'password' => Hash::make($request->password), // Hash de la contraseña
-            'tipo' => $request->tipo,
-        ]);
-
-        return response()->json(['message' => 'Usuario creado correctamente', 'user' => $user], 201);
+            } elseif ($request->tipo === 'empresa') {
+                $request->validate([
+                    'usuario' => 'required|string|unique:usuarios',
+                    'password' => 'required|string|min:6',
+                    'cif' => 'required|string|unique:empresa|max:11',
+                    'nombre' => 'required|string|max:45',
+                    'localidad' => 'required|string|max:45',
+                    'telefono' => 'required|digits:9'
+                ]);
+    
+                $user = User::create([
+                    'usuario' => $request->usuario,
+                    'password' => Hash::make($request->password),
+                    'tipo' => $request->tipo,
+                ]);
+    
+                $empresa = Empresa::create([
+                    'validado' => 0,
+                    'cif' => $request->cif,
+                    'nombre' => $request->nombre,
+                    'localidad' => $request->localidad,
+                    'telefono' => $request->telefono,
+                ]);
+    
+                DB::table('usuario_empresa')->insert([
+                    'idUsuario' => $user->id,
+                    'idEmpresa' => $empresa->id,
+                ]);
+            }
+    
+            DB::commit();
+            return response()->json(['message' => 'Usuario y relación creados correctamente'], 201);
+    
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Error al crear usuario', 'details' => $e->getMessage()], 500);
+        }
     }
+    
 
     /**
      * Iniciar sesión con usuario y contraseña
@@ -48,7 +111,12 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['message' => 'Inicio de sesión exitoso', 'user' => $user]);
+        return response()->json([
+            'message' => 'Inicio de sesión exitoso',
+            'id' => $user->id,
+            'usuario' => $user->usuario,
+            'tipo' => $user->tipo,
+        ]);
     }
 }
 

@@ -16,25 +16,31 @@ function Login() {
     // Resetear los posibles errores previos
     setError("");
 
-    // Enviar peticion al backend
-    const response = await fetch("http://127.0.0.1:8000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ usuario: usuario, password: password }),
-      credentials: "include", // Si se usan cookies para mantener sesion
-    });
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, password }),
+        credentials: "include", // Si se usan cookies para mantener sesión
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Guardar datos de usuario en localStorage
+        localStorage.setItem("tipoUsuario", data.tipo); 
+        localStorage.setItem("usuario", data.usuario);
+        localStorage.setItem("usuarioId", data.id); 
+  
+        // Redireccionar a la página correspondiente
+        window.location.href = `http://localhost:5173/home`;
 
-    // Convertir la respuesta recibida a JSON
-    const data = await response.json();
-    
-    if (response.ok) {
-      // Si la respuesta es correcta recupera el ID del usuario registrado
-      const idUsuario = data.user.id;
-      // Y lo redirige a su pagina home
-      window.location.href = `http://localhost:5173/home/${idUsuario}`;
-    } else {
-      // Modificar el useState "error" con el error sucedido al intentar logearse
-      setError(data.message);
+      } else {
+        setError(data.message || "Error en el inicio de sesión");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      setError("Error en el servidor");
     }
   };
 
