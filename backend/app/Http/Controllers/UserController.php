@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Empresa;
 use App\Models\Demandante;
+use App\Models\UsuarioDemandante;
+use App\Models\UsuarioEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 
 class UserController extends Controller
@@ -18,10 +21,10 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            if ($request->tipo === 'demandante') {
-                $request->validate([
+        switch ($request->tipo) {
+            //Demandante
+            case 'demandante':
+                $validator = Validator::make($request->all(), [
                     'usuario' => 'required|string|unique:usuarios',
                     'password' => 'required|string|min:6',
                     'dni' => 'required|string|size:9',
@@ -32,13 +35,30 @@ class UserController extends Controller
                     'email' => 'required|email|max:45',
                     'situacion' => 'required|in:0,1'
                 ]);
-    
+                // Validar los datos demandante
+                if($validator->fails()){
+                    $data = [
+                        "message" => "Error en la validación de datos",
+                        "errors" => $validator->errors(),
+                        "status" => 400
+                    ];
+                    return response()->json($data, 400);
+                }
+                //Creacion de usuario
                 $user = User::create([
                     'usuario' => $request->usuario,
                     'password' => Hash::make($request->password),
                     'tipo' => $request->tipo,
                 ]);
-    
+                //Usuario no ha podido ser creado
+                if (!$user) {
+                    $data = [
+                        "message" => "Error al crear el usuario",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                //Creacion de demandante
                 $demandante = Demandante::create([
                     'dni' => $request->dni,
                     'nombre' => $request->nombre,
@@ -48,14 +68,40 @@ class UserController extends Controller
                     'email' => $request->email,
                     'situacion' => $request->situacion,
                 ]);
-    
-                DB::table('usuario_demandante')->insert([
+                //Demandante no ha podido ser creado
+                if (!$demandante) {
+                    $data = [
+                        "message" => "Error al crear el demandante",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                //Creacion de la relacion entre usuario y demandante
+                $usuario_demandante = UsuarioDemandante::create([
                     'idUsuario' => $user->id,
                     'idDemandante' => $demandante->id,
                 ]);
+                //Relacion no ha podido ser creada
+                if (!$usuario_demandante) {
+                    $data = [
+                        "message" => "Error al crear la relación entre usuario y demandante",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                //Si todo ha ido bien
+                $data = [
+                    "message" => "Usuario demandante creado correctamente",
+                    "usuario" => $user,
+                    "demandante" => $demandante,
+                    "usuario_demandante" => $usuario_demandante,
+                    "status" => 201
+                ];
+                return response()->json($data, 201);
 
-            } elseif ($request->tipo === 'empresa') {
-                $request->validate([
+            //Empresa
+            case 'empresa':
+                $validator = Validator::make($request->all(), [
                     'usuario' => 'required|string|unique:usuarios',
                     'password' => 'required|string|min:6',
                     'cif' => 'required|string|unique:empresa|max:11',
@@ -63,33 +109,79 @@ class UserController extends Controller
                     'localidad' => 'required|string|max:45',
                     'telefono' => 'required|digits:9'
                 ]);
-    
+                // Validar los datos empresa
+                if($validator->fails()){
+                    $data = [
+                        "message" => "Error en la validación de datos",
+                        "errors" => $validator->errors(),
+                        "status" => 400
+                    ];
+                    return response()->json($data, 400);
+                }
+                //Creacion de usuario
                 $user = User::create([
                     'usuario' => $request->usuario,
                     'password' => Hash::make($request->password),
                     'tipo' => $request->tipo,
                 ]);
-    
+                //Usuario no ha podido ser creado
+                if (!$user) {
+                    $data = [
+                        "message" => "Error al crear el usuario",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                //Creacion de empresa
+                $lastId = Empresa::max('id');
+                $nextId = $lastId + 1;
                 $empresa = Empresa::create([
+                    'id' => $nextId,
                     'validado' => 0,
                     'cif' => $request->cif,
                     'nombre' => $request->nombre,
                     'localidad' => $request->localidad,
-                    'telefono' => $request->telefono,
+                    'telefono' => $request->telefono
                 ]);
-    
-                DB::table('usuario_empresa')->insert([
+                //Empresa no ha podido ser creada
+                if (!$empresa) {
+                    $data = [
+                        "message" => "Error al crear la empresa",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                $empresa = Empresa::find($nextId);
+                //Creacion de la relacion entre usuario y empresa
+                $usuario_empresa = UsuarioEmpresa::create([
                     'idUsuario' => $user->id,
-                    'idEmpresa' => $empresa->id,
+                    'idEmpresa' => $empresa->id
                 ]);
-            }
-    
-            DB::commit();
-            return response()->json(['message' => 'Usuario y relación creados correctamente'], 201);
-    
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['error' => 'Error al crear usuario', 'details' => $e->getMessage()], 500);
+                //Relacion no ha podido ser creada
+                if (!$usuario_empresa) {
+                    $data = [
+                        "message" => "Error al crear la relación entre usuario y empresa",
+                        "status" => 500
+                    ];
+                    return response()->json($data, 500);
+                }
+                //Si todo ha ido bien
+                $data = [
+                    "message" => "Usuario empresa creado correctamente",
+                    "usuario" => $user,
+                    "empresa" => $empresa,
+                    "usuario_empresa" => $usuario_empresa,
+                    "status" => 201
+                ];
+                return response()->json($data, 201);
+            
+            //Si el tipo no es ni empresa ni demandante
+            default:
+                $data = [
+                    "message" => "Tipo de usuario no válido",
+                    "status" => 400
+                ];
+                return response()->json($data, 400);
         }
     }
     
