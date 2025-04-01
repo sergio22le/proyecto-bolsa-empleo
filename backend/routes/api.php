@@ -29,5 +29,7 @@ Route::resource('titulos', TituloController::class);
 //Usuarios
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/token', [UserController::class, 'tokens_test']);
-Route::get('/token2', [UserController::class, 'toke_get'])->middleware('auth:sanctum');
+Route::post('/deltoken', [UserController::class, 'removeToken']);
+
+//Testing
+Route::get('checktoken', [UserController::class, 'checkToken'])->middleware('auth:sanctum');

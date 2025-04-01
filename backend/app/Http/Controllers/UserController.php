@@ -186,15 +186,23 @@ class UserController extends Controller
     }
     
 
-    /**
-     * Iniciar sesión con usuario y contraseña
-     */
+    //Usuario administrador: centro - P.Estella
     public function login(Request $request)
     {
-        $request->validate([
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
             'usuario' => 'required|string',
             'password' => 'required|string',
         ]);
+        
+        if($validator->fails()){
+            $data = [
+                "message" => "Error en la validación de datos",
+                "errors" => $validator->errors(),
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
 
         $user = User::where('usuario', $request->usuario)->first();
 
@@ -202,38 +210,27 @@ class UserController extends Controller
             return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
 
-        Auth::login($user);
-
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso',
-            'id' => $user->id,
-            'usuario' => $user->usuario,
-            'tipo' => $user->tipo,
-        ]);
-    }
-
-    public function tokens_test()
-    {
-        $user = User::find(1);
-        if (!$user) {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
-        }
-
+        //Obtengo el token
         $token = $user->createToken('token')->plainTextToken;
 
+        // Devolver el token al usuario
         return response()->json([
-            'user' => $user,
+            'message' => 'Inicio de sesión exitoso',
             'token' => $token,
+            'id' => $user->id,
+            'usuario' => $user->usuario,
+            'tipo' => $user->tipo
         ]);
     }
 
-    public function toke_get()
+    public function checkToken()
     {
         $user = Auth::user();
         if (!$user) {
-            return response()->json(['error' => 'Usuario no autenticado'], 401);
+            return response()->json(['message' => 'Token inválido'], 401);
         }
         return response()->json([
+            'message' => 'Token válido',
             'user' => $user
         ]);
     }
