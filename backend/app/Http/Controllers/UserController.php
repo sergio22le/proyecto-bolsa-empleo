@@ -223,6 +223,26 @@ class UserController extends Controller
         ]);
     }
 
+    //Elimina el token del usuario
+    public function logout()
+    {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Sesión inválida o cerrada",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+        $user->currentAccessToken()->delete();
+
+        $data = [
+            "message" => "Sesión cerrada correctamente",
+            "status" => 200
+        ];
+        return response()->json($data, 200);
+    }
+
     public function checkToken()
     {
         $user = Auth::user();

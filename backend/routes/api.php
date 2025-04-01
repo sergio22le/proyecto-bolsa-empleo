@@ -29,6 +29,7 @@ Route::resource('titulos', TituloController::class);
 //Usuarios
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+Route::delete('/logout', [UserController::class, 'logout']);
 Route::post('/deltoken', [UserController::class, 'removeToken']);
 
 //Testing
