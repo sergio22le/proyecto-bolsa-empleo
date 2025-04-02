@@ -12,7 +12,8 @@ use App\Http\Controllers\UserController;
 
 
 //Empresas
-Route::patch('/empresas/validate={id}', [EmpresaController::class, 'validate']);
+Route::patch('/empresas/validate={id}', [EmpresaController::class, 'validate']); //Validado 1
+Route::patch('/empresas/reject={id}', [EmpresaController::class, 'reject']); //Validado -1
 Route::resource('empresas', EmpresaController::class);
 
 //Titulos demandantes

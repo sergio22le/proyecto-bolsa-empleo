@@ -279,4 +279,56 @@ class EmpresaController extends Controller
     
         return response()->json($data, 200);
     }
+
+    //Rechaza una empresa
+    public function reject($id)
+    {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo!="admin")
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $empresa = Empresa::find($id);
+        if(!$empresa) {
+            $data = [
+                "message" => "Empresa no encontrada",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        if($empresa->validado == -1)
+        {
+            $data = [
+                "message" => "La empresa ya se encuentra rechazada.",
+                "status" => 409
+            ];
+            return response()->json($data, 409);
+        }
+
+        $empresa->validado = -1;
+
+        $empresa->save();
+    
+        $data = [
+            "message" => "Empresa rechazada con éxito",
+            "empresa" => $empresa,
+            "status" => 200
+        ];
+    
+        return response()->json($data, 200);
+    }
 }
