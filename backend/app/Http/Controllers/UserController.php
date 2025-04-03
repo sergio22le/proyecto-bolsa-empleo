@@ -243,16 +243,43 @@ class UserController extends Controller
         return response()->json($data, 200);
     }
 
-    public function checkToken()
+    public function user()
     {
-        $user = Auth::user();
+        $user = Auth::guard('sanctum')->user();
         if (!$user) {
-            return response()->json(['message' => 'Token inválido'], 401);
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
         }
-        return response()->json([
-            'message' => 'Token válido',
-            'user' => $user
-        ]);
+
+        switch ($user->tipo) {
+            case 'demandante':
+                $usuario_demandante = UsuarioDemandante::find($user->id);
+                $demandante = $usuario_demandante->demandante;
+                $data = [
+                    "usuario" => $user,
+                    "demandante" => $demandante,
+                    "status" => 200
+                ];
+                return response()->json($data, 200);
+            case 'empresa':
+                $usuario_empresa = UsuarioEmpresa::find($user->id);
+                $empresa = $usuario_empresa->empresa;
+                $data = [
+                    "usuario" => $user,
+                    "empresa" => $empresa,
+                    "status" => 200
+                ];
+                return response()->json($data, 200);
+            default:
+                $data = [
+                    "usuario" => $user,
+                    "status" => 200
+                ];
+                return response()->json($data, 200);
+        }
     }
 }
 

@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Demandante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DemandanteController extends Controller
 {
+    //Lista completa de los demandantes
     public function index()
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user || $user->tipo != 'admin') {
+            $data = [
+                "message" => "Acceso no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandantes = Demandante::all();
 
         $data = [
@@ -20,8 +31,15 @@ class DemandanteController extends Controller
         return response()->json($data, 200);
     }
 
+    //NOT_IMPLEMENTED: Añade un demandante
     public function store(Request $request)
     {
+        $data = [
+            "message" => "Funcion no implementada",
+            "status" => 501
+        ];
+        return response()->json($data, 501);
+
         $validator = Validator::make($request->all(), [
             'dni' => 'required|string|size:9',
             'nombre' => 'required|string|max:45',
@@ -69,7 +87,8 @@ class DemandanteController extends Controller
 
     public function show(string $id)
     {
-        $demandante = Demandante::find($id);
+        //$demandante = Demandante::find($id);
+        $demandante = Demandante::with('titulos', 'ofertas')->find($id);
 
         if(!$demandante) {
             $data = [
@@ -137,8 +156,15 @@ class DemandanteController extends Controller
         return response()->json($data, 200);
     }
 
+    //NOT_IMPLEMENTED: Elimina un demandante
     public function destroy(string $id)
     {
+        $data = [
+            "message" => "Funcion no implementada",
+            "status" => 501
+        ];
+        return response()->json($data, 501);
+
         $demandante = Demandante::find($id);
 
         if(!$demandante) {

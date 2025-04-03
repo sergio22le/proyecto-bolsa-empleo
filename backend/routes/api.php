@@ -21,6 +21,9 @@ Route::resource('demandantes.titulos', TituloDemandanteController::class);
 //Demandantes
 Route::resource('demandantes', DemandanteController::class);
 //Ofertas
+Route::get('/ofertas/postulantes/{id}', [OfertaController::class, 'getPostulantes']);
+Route::get('/ofertas/candidatos/{id}', [OfertaController::class, 'getCandidatos']);
+Route::patch('/ofertas/cerrar/{id}', [OfertaController::class, 'cerrarOferta']);
 Route::post('/ofertas/titulo/', [OfertaController::class, 'addTituloOferta']);
 Route::post('/ofertas/iscribir/', [OfertaController::class, 'inscribirOferta']);
 Route::patch('/ofertas/adjudicar/', [OfertaController::class, 'adjudicarOferta']);
@@ -34,4 +37,4 @@ Route::delete('/logout', [UserController::class, 'logout']);
 Route::post('/deltoken', [UserController::class, 'removeToken']);
 
 //Testing
-Route::get('checktoken', [UserController::class, 'checkToken'])->middleware('auth:sanctum');
+Route::get('user', [UserController::class, 'user']);

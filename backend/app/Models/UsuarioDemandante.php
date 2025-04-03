@@ -11,6 +11,7 @@ class UsuarioDemandante extends Model
 
     protected $table = 'usuario_demandante';
     public $timestamps = false;
+    protected $primaryKey = 'idUsuario';
 
     protected $fillable = [
         'idUsuario',
