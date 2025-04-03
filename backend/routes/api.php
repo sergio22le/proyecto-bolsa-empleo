@@ -19,13 +19,15 @@ Route::resource('empresas', EmpresaController::class);
 //Titulos demandantes
 Route::resource('demandantes.titulos', TituloDemandanteController::class);
 //Demandantes
+Route::get('/demandantes/ofertas/{id}', [DemandanteController::class, 'getOfertas']);
 Route::resource('demandantes', DemandanteController::class);
 //Ofertas
 Route::get('/ofertas/postulantes/{id}', [OfertaController::class, 'getPostulantes']);
 Route::get('/ofertas/candidatos/{id}', [OfertaController::class, 'getCandidatos']);
 Route::patch('/ofertas/cerrar/{id}', [OfertaController::class, 'cerrarOferta']);
 Route::post('/ofertas/titulo/', [OfertaController::class, 'addTituloOferta']);
-Route::post('/ofertas/iscribir/', [OfertaController::class, 'inscribirOferta']);
+Route::post('/ofertas/inscribir/', [OfertaController::class, 'inscribirOferta']);
+Route::delete('/ofertas/desinscribir/', [OfertaController::class, 'desinscribirOferta']);
 Route::patch('/ofertas/adjudicar/', [OfertaController::class, 'adjudicarOferta']);
 Route::resource('ofertas', OfertaController::class);
 //Titulos

@@ -5,18 +5,39 @@ namespace App\Http\Controllers;
 use App\Models\Demandante;
 use App\Models\Titulo;
 use App\Models\TituloDemandante;
+use App\Models\UsuarioDemandante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TituloDemandanteController extends Controller
 {
+    //Lista completa de los títulos de un demandante
     public function index(string $id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo == 'empresa' || ($user->tipo == 'demandante' && UsuarioDemandante::find($user->id)->idDemandante != $id))
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandante = Demandante::find($id);
 
         if(!$demandante) {
             $data = [
-                "message" => "Demandante no encontrada",
+                "message" => "Demandante no encontrado",
                 "status" => 404
             ];
             return response()->json($data, 404);
@@ -33,10 +54,28 @@ class TituloDemandanteController extends Controller
         return response()->json($data, 200);
     }
 
+    //Añade un título a un demandante
     public function store(string $id, Request $request)
     {
-        $demandante = Demandante::find($id);
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
 
+        if($user->tipo != 'demandante' || UsuarioDemandante::find($user->id)->idDemandante != $id)
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $demandante = Demandante::find($id);
         if(!$demandante) {
             $data = [
                 "message" => "Demandante no encontrada",
@@ -95,8 +134,27 @@ class TituloDemandanteController extends Controller
         return response()->json($data, 201);
     }
 
+    //Muestra un título de un demandante
     public function show(string $dem, string $tit)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'demandante' || UsuarioDemandante::find($user->id)->idDemandante != $dem)
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandante = Demandante::find($dem);
 
         if(!$demandante) {
@@ -127,6 +185,24 @@ class TituloDemandanteController extends Controller
 
     public function update(Request $request, string $dem, string $tit)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'demandante' || UsuarioDemandante::find($user->id)->idDemandante != $dem)
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandante = Demandante::find($dem);
 
         if(!$demandante) {
@@ -193,6 +269,24 @@ class TituloDemandanteController extends Controller
 
     public function destroy(string $dem, string $tit)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'demandante' || UsuarioDemandante::find($user->id)->idDemandante != $dem)
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandante = Demandante::find($dem);
 
         if(!$demandante) {

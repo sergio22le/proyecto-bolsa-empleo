@@ -433,6 +433,73 @@ class OfertaController extends Controller
         return response()->json($data, 201);        
     }
 
+    //Desinscribe a un demandante de una oferta
+    public function desinscribirOferta(Request $request)
+    {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id_oferta' => 'required|integer|exists:oferta,id',
+            'id_demandante' => 'required|integer|exists:demante,id'
+        ]);
+
+        if($validator->fails()){
+            $data = [
+                "message" => "Error en la validación de datos",
+                "errors" => $validator->errors(),
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        if($user->tipo!="demandante")
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $usuario_demandante = UsuarioDemandante::find($user->id);
+        $demandante = $usuario_demandante->demandante;
+
+        if($demandante->id != $request->id_demandante)
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $apuntado = ApuntadoOferta::where('id_oferta', $request->id_oferta)
+                                  ->where('id_demandante', $demandante->id);
+
+        if (!$apuntado->first()) {
+            $data = [
+                "message" => "Demandante no inscrito a la oferta",
+                "status" => 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        $apuntado->delete();
+
+        $data = [
+            "message" => "Demandante desinscrito de la oferta",
+            "status" => 200
+        ];
+        return response()->json($data, 200);
+    }
+
     //Adjudica una oferta a un demandante
     public function adjudicarOferta(Request $request)
     {
