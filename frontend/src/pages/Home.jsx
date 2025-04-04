@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Oferta from "../components/Oferta";
-import Empresa from "../components/Empresa";
-import "./Home.css";
+import Ofertas from "../components/Ofertas";
+import Empresas from "../components/Empresas";
 
 function Home() {
-  const [tipoUsuario, setTipoUsuario] = useState(""); // Estado para el tipo de usuario
+  const [tipoUsuario, setTipoUsuario] = useState(""); // Estado para almacenar el tipo de usuario
 
+  // Obtener los datos de la sesión al cargar la página
   useEffect(() => {
-    // Obtener el tipo de usuario del localStorage cuando el componente se monta
-    const tipo = localStorage.getItem("tipoUsuario");
-    setTipoUsuario(tipo); // Actualizar el estado con el tipo de usuario
+    setTipoUsuario(sessionStorage.getItem('tipo'));
   }, []);
 
   return (
-    <div>
-      <Header />
-      {tipoUsuario === "demandante" && <Oferta />} {/* Renderizar Oferta si es demandante */}
-      {tipoUsuario === "admin" && <Empresa />} {/* Renderizar Empresa si es admin */}
-      <Footer />
-    </div>
+      <div className="home-body">
+          <>
+            {/* Renderizar componentes según el tipo de usuario */}
+            {tipoUsuario === "demandante" && <Ofertas />}
+            {tipoUsuario === "admin" && <Empresas />}
+            {tipoUsuario === "empresa" && <Solicitudes />}
+          </>
+      </div>
   );
 }
 

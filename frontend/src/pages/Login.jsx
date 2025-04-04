@@ -1,7 +1,4 @@
 import { useState } from "react";
-import "./Login.css";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 function Login() {
   // Estados para demandante
@@ -17,24 +14,32 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
+      const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, password }),
-        credentials: "include", // Si se usan cookies para mantener sesión
       });
   
       const data = await response.json();
   
       if (response.ok) {
-        // Guardar datos de usuario en localStorage
-        localStorage.setItem("tipoUsuario", data.tipo); 
-        localStorage.setItem("usuario", data.usuario);
-        localStorage.setItem("usuarioId", data.id); 
+
+        const tokenUsuario = data.token;
+        const idUsuario = data.id;
+        const usuario = data.usuario;
+        const tipoUsuario = data.tipo;
+
+        if (tokenUsuario) {
+          
+          sessionStorage.setItem('idUsuario', idUsuario);
+          sessionStorage.setItem('token', tokenUsuario);
+          sessionStorage.setItem('usuario', usuario);
+          sessionStorage.setItem('tipo', tipoUsuario);
   
         // Redireccionar a la página correspondiente
-        window.location.href = `http://localhost:5173/home`;
-
+        window.location.href = `http://localhost:5173/home/${idUsuario}`;
+        console.log(idUsuario);
+      }
       } else {
         setError(data.message || "Error en el inicio de sesión");
       }
@@ -46,7 +51,6 @@ function Login() {
 
   return (
     <div className="login">
-      <Header />
       <div className="login-body">
         <h2>Iniciar Sesión</h2>
         <div className="login-container">
@@ -66,7 +70,6 @@ function Login() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

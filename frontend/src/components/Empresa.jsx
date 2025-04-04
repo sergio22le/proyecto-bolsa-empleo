@@ -1,15 +1,19 @@
-import React from "react";
-import "./Empresa.css";
-
-const Empresa = () => {
+const Empresa = ({ empresa, validar, rechazar }) => {
     return (
         <div className="container-empresa">
             <div className="div-empresa">
-                <p className="fecha-registro">Fecha registro</p>
-                <p className="empresa">Empresa</p>
+                <div className="cif-empresa">
+                    <h4>CIF</h4>
+                    <p className="fecha-registro">{empresa.cif}</p>
+                </div>
+                <div className="nombre-empresa">
+                    <h4>Empresa</h4>
+                    <p className="empresa">{empresa.nombre}</p>
+                </div>
             </div>
             <div className="div-boton">
-                <button className="boton-aceptar">Aceptar</button>
+                <button className="boton-aceptar" onClick={() => validar(empresa.id)}>Validar</button>
+                <button className="boton-rechazar" onClick={() => rechazar(empresa.id)}>Rechazar</button>
             </div>
         </div>
     );

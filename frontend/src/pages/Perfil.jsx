@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Perfil.css";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
@@ -34,7 +31,6 @@ const Perfil = () => {
 
   return (
     <div className="perfil">
-      <Header />
       <div className="body-perfil">
         <h1>
           Perfil {tipoUsuario === "demandante" ? "personal de" : "de la empresa"}{" "}
@@ -93,7 +89,6 @@ const Perfil = () => {
           Volver
         </a>
       </div>
-      <Footer />
     </div>
   );
 };

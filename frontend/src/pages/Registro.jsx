@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import "./Registro.css";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 const Registro = () => {
   const [tipoRegistro, setTipoRegistro] = useState("demandante");
@@ -109,7 +106,6 @@ const Registro = () => {
 
   return (
     <div className="registro">
-      <Header />
       <div className="registro-body">
         <h2>Registro</h2>
         <div className="seleccion-usuario">
@@ -164,7 +160,6 @@ const Registro = () => {
         </div>
         <a href="../">Volver</a>
       </div>
-      <Footer />
     </div>
   );
 };

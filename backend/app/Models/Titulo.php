@@ -16,4 +16,14 @@ class Titulo extends Model
         "id",
         "nombre"
     ];
+
+    public function ofertas()
+    {
+        return $this->belongsToMany(Oferta::class, 'titulos_oferta', 'id_titulo', 'id_oferta');
+    }
+    
+    public function demandantes()
+    {
+        return $this->belongsToMany(Demandante::class, 'titulos_demandante', 'id_dem', 'id_titulo');
+    }
 }

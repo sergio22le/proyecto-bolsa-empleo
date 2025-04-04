@@ -1,12 +1,8 @@
 import React from "react";
-import "./DetalleOferta.css";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 const DetalleOferta = () => {
     return (
         <div className="detalle-oferta">
-            <Header />
                 <div className="body-detalle-oferta">
                     <h1>Detalle oferta</h1>
                     <div className="container-detalle-oferta">
@@ -50,7 +46,6 @@ const DetalleOferta = () => {
                     </div>
                     <a className="volver" href="/home">Volver</a>
                 </div>
-            <Footer />
         </div>
     );
 }

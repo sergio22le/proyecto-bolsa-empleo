@@ -1,3 +1,545 @@
+
+/* ===== App ===== */
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* ===== Header ===== */
+.header {
+  background-color: #f1f1f1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 30px;
+  gap: 20px;
+  color: #333;
+  margin-top: 0;
+  border-bottom: 1px solid #ddd;
+}  
+
+.usuario-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  gap: 15px;
+}
+
+.div-sesion button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #9c39d4;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.enlace-perfil {
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+.botones-sesion {
+  display: flex;
+  flex-direction: row;
+  justify-self: start;
+  gap: 20px;
+}
+
+.cerrar-sesion {
+  background-color: #9c39d4;
+  width: fit-content;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.icono-usuario {
+  background-color: #bbbbbb;
+  border: 2px solid black;
+  border-radius: 100px;
+  padding: 10px 15px;
+  width: fit-content;
+  font-weight: bold;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 10px 0;
+  width: 100%;
+  bottom: 0;
+  border-top: 1px solid #ddd;
+}
+
+/* ===== DetalleOferta ===== */
+.body-detalle-oferta {
+    text-align: center;
+}
+
+.body-detalle-oferta h1 {
+    text-align: left;
+}
+
+.container-detalle-oferta {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 75%;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 50px 30px 50px;
+    margin-bottom: 50px;
+}
+
+.datos-oferta {
+    text-align: left;
+}
+
+.datos-oferta h3 {
+    margin-bottom: 0px;
+}
+
+.datos-oferta div {
+    margin-bottom: 50px;
+}
+
+.container-detalle-oferta a {
+    color: white;
+    text-decoration: none;
+}
+
+.boton-apuntarme button {
+    background-color: #9c39d4;
+}
+
+.volver {
+    text-align: center;
+    margin: 50px;
+}
+
+/* ===== Empresa ===== */
+.container-empresa{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.div-empresa {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    margin: auto;
+    padding: 10px 20px;
+}
+
+.div-empresa .fecha-registro {
+    text-align: left;
+    width: 30%;
+}
+
+.div-empresa .cif-empresa, .div-empresa .nombre-empresa {
+    text-align: left;
+    width: 60%;
+}
+
+.div-boton {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+    text-align: center;
+    width: 35%;
+}
+
+.boton-aceptar {
+    background-color: #9c39d4;
+    color: white;
+    margin-top: 18px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+}
+
+.boton-rechazar {
+  background-color: #c12b2b;
+  color: white;
+  margin-top: 18px;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 15px;
+}
+
+.info-empresas {
+  text-align: center;
+}
+
+/* ===== Home ===== */
+
+
+/* ===== Login ===== */
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+}
+
+.login-body{
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-body h2 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-bottom: 50px;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: #f4f4f4;
+  margin: auto;
+  padding: 10px 40px 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 50%;
+}
+
+.form-login label {
+  text-align: left;
+  font-weight: 600;
+}
+
+.form-login input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.iniciar-sesion {
+  background-color: #9c39d4;
+  color: white;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+button.registro {
+  background-color: #28a745;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+} 
+
+/* ===== Oferta ===== */
+.container-oferta{
+    text-align: left;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.container-oferta h2 {
+    padding-left: 30px;
+}
+
+.oferta {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 90%;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.condiciones-oferta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+    width: 80%;
+}
+
+.fecha-publi {
+    width: 20%;
+}
+
+.empresa {
+    width: 40%;
+}
+
+.contrato {
+    width: 20%;
+}
+
+.n-puestos {
+    width: 20%;
+}
+
+.oferta button {
+    background-color: #9c39d4;
+    margin-top: 8px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+}
+
+.oferta a {
+    color: white;
+    text-decoration: none;
+}
+
+/* ===== Perfil ===== */
+.body-perfil {
+    text-align: center;
+}
+
+.body-perfil h1 {
+    text-align: left;
+}
+
+.container-perfil {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 50px;
+}
+
+.datos-perfil {
+    text-align: left;
+}
+
+.datos-perfil h3 {
+    margin-bottom: 0px;
+}
+
+.datos-perfil div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: left;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.datos-perfil label {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.datos-perfil input {
+    height: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.container-perfil a {
+    color: white;
+    text-decoration: none;
+}
+
+.guardar {
+    margin-top: 20px;
+    background-color: #9c39d4;
+    color: white;
+}
+
+.volver {
+    text-align: center;
+    margin: 50px;
+}
+
+/* ===== Registro ===== */
+.registro {
+  color: #9c39d4;
+  width: 100%;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.registro-body {
+  padding: 50px 0;
+}
+
+.registro-body h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.seleccion-usuario {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  margin: auto;
+  width: 40%;
+  padding: 20px;
+}
+
+.seleccion-usuario button {
+  background-color: white;
+  color: #9c39d4;
+  border: 1px solid #9c39d4;
+  border-radius: 10px;
+}
+
+.form-registro label {
+  color:black;
+}
+
+.activo {
+  background-color: #9c39d4 !important;
+  color: white !important;
+}
+
+.div-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+}
+
+.form-registro {
+  background: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+}
+  
+.form-registro input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.div-select {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.div-select select {
+  width: 30%;
+  padding: 5px;
+  height: auto;
+  width: fit-content;
+}
+  
+.form-registro button {
+  background-color: #28a745;
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  
+button:hover {
+  background-color: #0056b3;
+  color:white;
+}
+
+/* ===== index ===== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -66,4 +608,3 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-

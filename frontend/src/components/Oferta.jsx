@@ -1,6 +1,3 @@
-import React from "react";
-import "./Oferta.css";
-
 const Oferta = () => {
     return (
         <div className="container-oferta">
