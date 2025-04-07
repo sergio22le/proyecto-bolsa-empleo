@@ -22,4 +22,13 @@ class Demandante extends Model
         'email',
         'situacion'
     ];
+
+    public function titulos()
+    {
+        return $this->hasMany(TituloDemandante::class, 'id_dem', 'id');
+    }
+    public function ofertas()
+    {
+        return $this->hasMany(ApuntadoOferta::class, 'id_demandante', 'id');
+    }
 }

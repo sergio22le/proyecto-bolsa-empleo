@@ -1,7 +1,6 @@
 # Ignorar archivos de Laravel
 /backend/vendor/
 /backend/node_modules/
-/backend/storage/
 /backend/.env
 
 # Ignorar archivos de React + Vite

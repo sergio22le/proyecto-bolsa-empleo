@@ -10,7 +10,6 @@ class TituloOferta extends Model
     use HasFactory;
 
     protected $table = 'titulos_oferta';
-    protected $primaryKey = ['id_oferta', 'id_titulo'];
     public $incrementing = false;
     public $timestamps = false;
 
@@ -24,8 +23,8 @@ class TituloOferta extends Model
         return $this->belongsTo(Oferta::class, 'id_oferta', 'id');
     }
 
-    public function demandante()
+    public function titulo()
     {
-        return $this->belongsTo(Demandante::class, 'id_demandante', 'id');
+        return $this->belongsTo(Titulo::class, 'id_titulo', 'id');
     }
 }

@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Titulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TituloController extends Controller
 {
+    //Listado de títulos
     public function index()
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
         $titulos = Titulo::all();
 
         $data = [
@@ -19,8 +30,28 @@ class TituloController extends Controller
 
         return response()->json($data, 200);
     }
+
+    //Crear un nuevo título
     public function store(Request $request)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo!="admin")
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:45'
         ]);
@@ -61,6 +92,15 @@ class TituloController extends Controller
 
     public function show(string $id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
         $titulo = Titulo::find($id);
 
         if(!$titulo) {
@@ -81,6 +121,24 @@ class TituloController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo!="admin")
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $titulo = Titulo::find($id);
 
         if(!$titulo) {
@@ -119,6 +177,24 @@ class TituloController extends Controller
 
     public function destroy(string $id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo!="admin")
+        {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+        
         $titulo = Titulo::find($id);
 
         if(!$titulo) {
