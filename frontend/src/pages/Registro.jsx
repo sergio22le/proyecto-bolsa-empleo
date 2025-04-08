@@ -49,7 +49,6 @@ const Registro = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(demandanteData),
-        credentials: "include", // Si se usan cookies para mantener sesion
       });
 
       const data = await response.json();
@@ -88,7 +87,6 @@ const Registro = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(empresaData),
-        credentials: "include", // Si se usan cookies para mantener sesion
       });
 
       const data = await response.json();
@@ -105,62 +103,107 @@ const Registro = () => {
   };
 
   return (
-    <div className="registro">
+    <section className="registro">
       <div className="registro-body">
         <h2>Registro</h2>
         <div className="seleccion-usuario">
-          <button className={tipoRegistro === "demandante" ? "activo" : ""} onClick={() => setTipoRegistro("demandante")}>
-            Demandante
-          </button>
-          <button className={tipoRegistro === "empresa" ? "activo" : ""} onClick={() => setTipoRegistro("empresa")}>
-            Empresa
-          </button>
+          <button className={tipoRegistro === "demandante" ? "activo" : ""} onClick={() => setTipoRegistro("demandante")}>Demandante</button>
+          <button className={tipoRegistro === "empresa" ? "activo" : ""} onClick={() => setTipoRegistro("empresa")}>Empresa</button>
         </div>
         <div className="div-form">
-          <form
-            onSubmit={tipoRegistro === "demandante" ? enviarDatosDemandante : enviarDatosEmpresa}
-            className="form-registro"
-          >
+          <form onSubmit={tipoRegistro === "demandante" ? enviarDatosDemandante : enviarDatosEmpresa} className="form-registro">
             {tipoRegistro === "demandante" && (
               <>
-                <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
-                <input type="text" name="ape1" placeholder="Primer Apellido" value={formData.ape1} onChange={actualizarDatos} required />
-                <input type="text" name="ape2" placeholder="Segundo Apellido" value={formData.ape2} onChange={actualizarDatos} required />
-                <input type="text" name="dni" placeholder="DNI" value={formData.dni} onChange={actualizarDatos} required />
-                <input type="email" name="email" placeholder="Correo Electrónico" value={formData.email} onChange={actualizarDatos} required />
-                <input type="tel" name="tel_movil" placeholder="Teléfono Móvil" value={formData.tel_movil} onChange={actualizarDatos} required />
-                <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
-                <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
-                <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required /> 
+                <div>
+                  <label htmlFor="nombre">Nombre</label>
+                  <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="ape1">Primer apellido</label>
+                  <input type="text" name="ape1" placeholder="Primer Apellido" value={formData.ape1} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="ape2">Segundo apellido</label>
+                  <input type="text" name="ape2" placeholder="Segundo Apellido" value={formData.ape2} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="dni">DNI</label>
+                  <input type="text" name="dni" placeholder="DNI" value={formData.dni} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input type="email" name="email" placeholder="Correo Electrónico" value={formData.email} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="tel_movil">Teléfono móvil</label>
+                  <input type="tel" name="tel_movil" placeholder="Teléfono Móvil" value={formData.tel_movil} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="usuario">Usuario</label>
+                  <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="password">Contraseña</label>
+                  <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="confirmPassword">Confirmar contraseña</label>
+                  <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required /> 
+                </div>
                 <div className="div-select">
                   <label htmlFor="select-situacion">Situación laboral:</label>
-                  <select className="select-situacion" name="situacionLaboral" value={formData.situacion} onChange={actualizarDatos}>
+                  <select className="select-situacion" name="select-situacion" value={formData.situacion} onChange={actualizarDatos}>
                     <option value="1">Con empleo</option>
                     <option value="0">Sin empleo</option>
                   </select>
                 </div>
-                <button id="registro-demandante" type="submit">Registrarse</button>
+                <div>
+                  <button id="registro-demandante" type="submit">Registrarse</button>
+                </div>
               </>
             )}
             {tipoRegistro === "empresa" && (
               <>
-                <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
-                <input type="text" name="cif" placeholder="CIF" value={formData.cif} onChange={actualizarDatos} required />
-                <input type="text" name="localidad" placeholder="Localidad" value={formData.localidad} onChange={actualizarDatos} required />
-                <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={actualizarDatos} required />
-                <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
-                <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
-                <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required />
-                <div className="boton-registro">
+                <div>
+                  <label htmlFor="nombre">Nombre</label>
+                  <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="cif">CIF</label>
+                  <input type="text" name="cif" placeholder="CIF" value={formData.cif} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="localidad">Localidad</label>
+                  <input type="text" name="localidad" placeholder="Localidad" value={formData.localidad} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="telefono">Teléfono</label>
+                  <input type="tel" name="telefono" placeholder="Teléfono Móvil" value={formData.telefono} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="usuario">Usuario</label>
+                  <input type="text" name="usuario" placeholder="Usuario" value={formData.usuario} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="passowrd">Contraseña</label>
+                  <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={actualizarDatos} required />
+                </div>
+                <div>
+                  <label htmlFor="confirmPassword">Confirmar contraseña</label>
+                  <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" value={formData.confirmPassword} onChange={actualizarDatos} required />
+                </div>
+                <div>
                   <button id="registro-empresa" type="submit">Registrarse</button>
                 </div>
               </>
             )}
           </form>
         </div>
-        <a href="../">Volver</a>
+        <div className="volver">
+          <a className="volver" href="../">Volver</a>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

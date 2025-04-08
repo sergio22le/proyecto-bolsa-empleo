@@ -1,68 +1,89 @@
-
-/* ===== App ===== */
+/* ========== Estilos generales ========== */
 #root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --color-fondo: #f7f7f7;
+  --color-header-footer: #e6e6e6;
+  --color-fondo-funciones: #eeeeee;
+  --color-fondo-elementos: #f5f5f5;
+  --color-borde-elementos: #ddd;
+
+  --color-boton-primario: #9c39d4;
+  --color-boton-secundario: #28a745;
+  --color-boton-rechazar: #fa4545;
+  --color-hover: #0056b3;
+
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
   min-height: 100vh;
   width: 100%;
+  background-color: var(--color-fondo);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+div.volver {
+  margin: 30px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a.volver {
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+a.volver:hover {
+  text-decoration: underline;
 }
 
-.card {
-  padding: 2em;
+button {
+  background-color: var(--color-boton-primario);
+  border: 1px transparent var(--color-boton-primario);
+  color: white;
+  width: fit-content;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.read-the-docs {
-  color: #888;
+button:hover {
+  background-color: var(--color-hover);
+  color:white;
+}
+
+.cargando {
+  text-align: center;
+}
+
+.info {
+  text-align: center;
 }
 
 /* ===== Header ===== */
 .header {
-  background-color: #f1f1f1;
+  background-color: var(--color-header-footer);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
   padding: 10px 30px;
   gap: 20px;
-  color: #333;
+  color: black;
   margin-top: 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-borde-elementos);
 }  
 
 .usuario-header {
@@ -72,20 +93,6 @@ body {
   gap: 15px;
 }
 
-.div-sesion button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #9c39d4;
-  color: white;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.enlace-perfil {
-  font-size: 1.2rem;
-  text-decoration: underline;
-}
-
 .botones-sesion {
   display: flex;
   flex-direction: row;
@@ -93,79 +100,252 @@ body {
   gap: 20px;
 }
 
-.cerrar-sesion {
-  background-color: #9c39d4;
-  width: fit-content;
-  text-align: center;
-  padding: 10px 20px;
-  border-radius: 10px;
-}
-
-.icono-usuario {
-  background-color: #bbbbbb;
-  border: 2px solid black;
-  border-radius: 100px;
-  padding: 10px 15px;
-  width: fit-content;
-  font-weight: bold;
-}
-
 /* ===== Footer ===== */
 .footer {
   text-align: center;
-  background-color: #f1f1f1;
-  color: #333;
+  background-color: var(--color-header-footer);
+  color: black;
   padding: 10px 0;
   width: 100%;
   bottom: 0;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-borde-elementos);
+}
+
+/* ========== Estilos de pagina ========== */
+
+/* ===== Login ===== */
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-body{
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.login-body h2 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: var(--color-fondo-elementos);
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+  width: 30%;
+}
+
+.form-login div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;;
+}
+
+.form-login label {
+  text-align: left;
+  font-weight: 600;
+}
+
+.form-login input {
+  align-items: center;
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 5px;
+}
+
+.form-login button.iniciar-sesion {
+  background-color: var(--color-boton-primario);
+  color: white;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+button.registro {
+  background-color: var(--color-boton-secundario);
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+} 
+
+/* ===== Registro ===== */
+.registro {
+  width: 100%;
+  margin: auto;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.form-registro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: auto;
+  width: 40%;
+  background: var(--color-fondo-elementos);
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.form-registro div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registro-body h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.seleccion-usuario {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  margin: auto;
+  width: 40%;
+  padding: 20px;
+}
+
+.seleccion-usuario button {
+  background-color: white;
+  color: var(--color-boton-primario);
+  border: 1px solid var(--color-boton-primario);
+  border-radius: 10px;
+}
+
+.activo {
+  background-color: var(--color-boton-primario) !important;
+  color: white !important;
+}
+  
+.form-registro input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 5px;
+  width: 50%;
+}
+
+.div-select {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.div-select select {
+  width: 30%;
+  padding: 5px;
+  height: auto;
+  width: fit-content;
+}
+  
+.form-registro button {
+  background-color: var(--color-boton-secundario);
+  color: white;
+  width: fit-content;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ===== Home ===== */
+section {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.section-funciones {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 40px;
+}
+
+.funciones {
+  display: flex;
+  flex-direction: row;
+  gap:10%;
+  justify-content: center;
+  padding: 5px;
+  background-color: var(--color-fondo-funciones);
+  border-bottom: 1px solid var(--color-borde-elementos);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.funciones div h4:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.funciones button .cerrar-oferta {
+  background-color: var(--color-boton-rechazar);
 }
 
 /* ===== DetalleOferta ===== */
-.body-detalle-oferta {
-    text-align: center;
-}
-
-.body-detalle-oferta h1 {
-    text-align: left;
-}
 
 .container-detalle-oferta {
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 75%;
-    margin: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 50px 30px 50px;
+    width: 70%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 50px;
+}
+
+.datos-detalle-oferta {
+  background-color: var(--color-fondo-elementos);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 50px 30px 50px;
+  margin-bottom: 30px;
 }
 
 .datos-oferta {
-    text-align: left;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  text-align: left;
 
-.datos-oferta h3 {
-    margin-bottom: 0px;
-}
-
-.datos-oferta div {
-    margin-bottom: 50px;
-}
-
-.container-detalle-oferta a {
-    color: white;
-    text-decoration: none;
-}
-
-.boton-apuntarme button {
-    background-color: #9c39d4;
-}
-
-.volver {
-    text-align: center;
-    margin: 50px;
 }
 
 /* ===== Empresa ===== */
@@ -225,154 +405,121 @@ body {
   padding: 10px 15px;
 }
 
-.info-empresas {
-  text-align: center;
-}
+/* ===== Ofertas ===== */
 
-/* ===== Home ===== */
-
-
-/* ===== Login ===== */
-.login {
-  display: flex;
-  flex-direction: column;
-  justify-content: center ;
-  align-items: center;
-}
-
-.login-body{
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.login-body h2 {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.login-container {
-  display: flex;
-  flex-direction: row;
-  width: 50%;
-  margin-bottom: 50px;
-}
-
-.form-login {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  background: #f4f4f4;
-  margin: auto;
-  padding: 10px 40px 10px 20px;
+.container-ofertas {
+  background-color: var(--color-fondo-elementos);
+  text-align: left;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+  width: 90%;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 50%;
-}
-
-.form-login label {
-  text-align: left;
-  font-weight: 600;
-}
-
-.form-login input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.iniciar-sesion {
-  background-color: #9c39d4;
-  color: white;
-  margin-top: 20px;
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: fit-content;
 }
 
-button.registro {
-  background-color: #28a745;
-  color: white;
+.container-ofertas h2 {
+  padding-left: 30px;
+}
+
+.cabecera-ofertas {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.form-crear-oferta {
+  background-color: var(--color-fondo-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 60%;
+  margin: auto;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form-crear-oferta div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-crear-oferta input {
+  width: 50%;
+  height: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid var(--color-borde-elementos);
+}
+
+.form-crear-oferta select {
+  text-align: center;
+  width: 30%;
+  height: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid var(--color-borde-elementos);
+}
+
+.form-crear-oferta .submit {
   margin-top: 10px;
-  margin-bottom: 10px;
-  width: fit-content;
-} 
+}
 
 /* ===== Oferta ===== */
-.container-oferta{
-    text-align: left;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 40px;
-    width: 80%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
-}
 
-.container-oferta h2 {
-    padding-left: 30px;
-}
-
-.oferta {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    width: 90%;
-    justify-content: space-between;
-    margin: auto;
+.condiciones-oferta p {
+  width: fit-content;
 }
 
 .condiciones-oferta {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 30px;
-    width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row; 
+  justify-content: space-between; 
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 30px;
+  margin: 10px;
 }
 
-.fecha-publi {
-    width: 20%;
+.botones .cerrar-oferta {
+  background-color: var(--color-boton-rechazar);
 }
 
-.empresa {
-    width: 40%;
+.botones {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
 }
 
-.contrato {
-    width: 20%;
-}
-
-.n-puestos {
-    width: 20%;
-}
-
-.oferta button {
-    background-color: #9c39d4;
-    margin-top: 8px;
-    width: fit-content;
-    height: fit-content;
-    padding: 10px 15px;
-}
-
-.oferta a {
+.condiciones-oferta a {
     color: white;
     text-decoration: none;
 }
 
+.desinscribirme {
+  background-color: var(--color-boton-rechazar);
+}
+
+.cerrada {
+  padding: 0 30px;
+  font-weight: 600;
+}
+
 /* ===== Perfil ===== */
-.body-perfil {
+.perfil {
     text-align: center;
 }
 
@@ -383,8 +530,8 @@ button.registro {
 .container-perfil {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    width: 60%;
+    text-align: left;
+    width: 80%;
     margin: auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -392,8 +539,20 @@ button.registro {
     margin-bottom: 50px;
 }
 
+.form-perfil {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
 .datos-perfil {
-    text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 20px;
+  width: 100%;
 }
 
 .datos-perfil h3 {
@@ -412,199 +571,230 @@ button.registro {
 
 .datos-perfil label {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .datos-perfil input {
     height: fit-content;
     padding: 10px;
     border-radius: 5px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-borde-elementos);
 }
 
-.container-perfil a {
-    color: white;
-    text-decoration: none;
+.situacion {
+  grid-column: span 2;
+}
+
+label.select-situacion {
+  display: block;
+  text-align: center;
+}
+
+.situacion select {
+  font-size: 1rem;
+  width: fit-content;
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: auto;
+  border: 1px solid var(--color-borde-elementos);
 }
 
 .guardar {
+    align-items: center;
     margin-top: 20px;
     background-color: #9c39d4;
     color: white;
 }
 
-.volver {
-    text-align: center;
-    margin: 50px;
+/* ===== Titulos ===== */
+.titulos .cabecera {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 60%;
+  height: auto;
+  margin: auto;
+  padding: 10px 30px;
 }
 
-/* ===== Registro ===== */
-.registro {
-  color: #9c39d4;
-  width: 100%;
+.container-titulos {
+  background-color: var(--color-fondo-elementos);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  width: 60%;
+  height: min-content;
   margin: auto;
-  border: 1px solid #ccc;
+  padding: 20px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+}
+
+.datos-titulo div {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap:10px;
+  width: 30%;
+}
+
+p.info-titulos {
   text-align: center;
 }
 
-.registro-body {
-  padding: 50px 0;
-}
-
-.registro-body h2 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.seleccion-usuario {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 30px;
-  margin: auto;
-  width: 40%;
-  padding: 20px;
-}
-
-.seleccion-usuario button {
-  background-color: white;
-  color: #9c39d4;
-  border: 1px solid #9c39d4;
-  border-radius: 10px;
-}
-
-.form-registro label {
-  color:black;
-}
-
-.activo {
-  background-color: #9c39d4 !important;
-  color: white !important;
-}
-
-.div-form {
+.añadir-titulo {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  width: 50%;
+  gap: 20px;
+  width: 40%;
+  height: auto;
   margin: auto;
-}
-
-.form-registro {
-  background: #f4f4f4;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin-bottom: 20px;
-}
-  
-.form-registro input {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 80%;
+  padding: 30px 30px;
 }
 
-.div-select {
+.añadir-titulo .submit {
   margin-top: 10px;
+  align-items: center;
+}
+
+.añadir-titulo div label {
+  font-weight: 500;
+}
+
+.añadir-titulo div {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   gap: 10px;
+  width: 50%;
 }
 
-.div-select select {
-  width: 30%;
-  padding: 5px;
+.añadir-titulo input {
   height: auto;
-  width: fit-content;
-}
-  
-.form-registro button {
-  background-color: #28a745;
-  color: white;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: none;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(--color-borde-elementos);
   border-radius: 5px;
-  cursor: pointer;
-}
-  
-button:hover {
-  background-color: #0056b3;
-  color:white;
 }
 
-/* ===== index ===== */
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.añadir-titulo select {
+  height: auto;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 5px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+/* ===== Titulo ===== */
+.container-titulo {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  width: 70%;
+  height: min-content;
+  margin: auto;
+  padding: 0 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: 1px solid var(--color-borde-elementos);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.container-titulo .datos-titulo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: left;
+  align-items: center;
+  gap: 50px;
+  padding: 0 30px;
 }
 
-button {
+.eliminar {
+  background-color: var(--color-boton-rechazar);
+}
+
+/* ===== Solicitudes ===== */
+.container-solicitudes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: var(--color-fondo-elementos);
+    border: 1px solid var(--color-borde-elementos);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+/* ===== Solicitud ===== */
+.container-solicitud {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: auto;
+  border: 1px solid var(--color-borde-elementos);
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 0 40px;
+  margin-bottom: 20px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: whitesmoke;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.info-principal {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 50px;;
+}
+
+.info-solicitud {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 0 40px;
+  margin-bottom: 20px;
+}
+
+.datos-demandante {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  align-items: center;
+  line-height: 1.2;
+  margin: 0.5rem 0;
+}
+
+.botones-solicitud {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 20%;
+}
+
+.datos-demandante p {
+  height: fit-content;
+  padding: 0;
+}
+
+.rechazar {
+  background-color: var(--color-boton-rechazar);
 }

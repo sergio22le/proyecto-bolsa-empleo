@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import Empresa from "./Empresa";
 
 const Empresas = () => {
-    // Estados
+
     const [error, setError] = useState("");
     const [empresasSinVerificar, setEmpresasSinVerificar] = useState(["vacio"]);
 
-    // Función para obtener todas las empresas desde el API
     const getEmpresas = async () => {
         const tokenUsuario = sessionStorage.getItem("token");
 
@@ -106,17 +105,16 @@ const Empresas = () => {
 
     }
 
-    // Renderizado del componente
     return (
         <div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {empresasSinVerificar[0] === "vacio" ? (
-                <p className="info-empresas">Cargando empresas...</p>
+                <p className="info">Cargando empresas...</p>
             ) : (empresasSinVerificar.length > 0 ? (
                 empresasSinVerificar.map((empresa) => (
                     <Empresa key={empresa.id} empresa={empresa} rechazar={rechazar} validar={validar}/>
             ))) : (
-                <p className="info-empresas">No hay empresas sin verificar</p>
+                <p className="info">No hay empresas sin verificar</p>
             )
             )}
         </div>

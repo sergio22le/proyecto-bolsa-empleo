@@ -23,11 +23,8 @@ const Header = () => {
           <h2>Bolsa de empleo</h2>
         </div>
         {usuario && ( // Renderiza el mensaje y botón solo si hay sesión activa
-          <div className="usuario-header">
-            <p>Bienvenido, <a className="enlace-perfil" href="/perfil">{usuario}</a></p>
-            <div className="div-sesion">
-              <button onClick={cerrarSesion}>Cerrar sesión</button>
-            </div>
+          <div>
+            <button className="cerrar-sesion" onClick={cerrarSesion}>Cerrar sesión</button>
           </div>
         )}
       </header>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Ofertas from "../components/Ofertas";
-import Empresas from "../components/Empresas";
+import HomeAdmin from "./HomeAdmin";
+import HomeEmpresa from "./HomeEmpresa";
+import HomeDemandante from "./HomeDemandante";
 
 function Home() {
   const [tipoUsuario, setTipoUsuario] = useState(""); // Estado para almacenar el tipo de usuario
@@ -11,14 +12,14 @@ function Home() {
   }, []);
 
   return (
-      <div className="home-body">
+      <section className="home-section">
           <>
             {/* Renderizar componentes según el tipo de usuario */}
-            {tipoUsuario === "demandante" && <Ofertas />}
-            {tipoUsuario === "admin" && <Empresas />}
-            {tipoUsuario === "empresa" && <Solicitudes />}
+            {tipoUsuario === "demandante" && <HomeDemandante />}
+            {tipoUsuario === "admin" && <HomeAdmin />}
+            {tipoUsuario === "empresa" && <HomeEmpresa />}
           </>
-      </div>
+      </section>
   );
 }
 
