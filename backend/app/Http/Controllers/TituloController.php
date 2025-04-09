@@ -204,7 +204,17 @@ class TituloController extends Controller
             ];
             return response()->json($data, 404);
         }
+        
+        $titulo->ofertas()->detach();
+        foreach ($titulo->ofertas as $oferta) {
+            $oferta->delete();
+        }
+        $titulo->demandantes()->detach();
+        foreach ($titulo->demandantes as $demandante) {
+            $demandante->delete();
+        }
 
+        // Eliminar el título
         $titulo->delete();
 
         $data = [

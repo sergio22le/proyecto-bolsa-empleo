@@ -98,7 +98,7 @@ class DemandanteController extends Controller
     //Muestra un demandante, sus titulos y sus ofertas inscritas
     public function show(string $id)
     {
-        $demandante = Demandante::with('titulos', 'ofertas')->find($id);
+        $demandante = Demandante::with('titulos', 'ofertas.oferta')->find($id);
 
         if(!$demandante) {
             $data = [

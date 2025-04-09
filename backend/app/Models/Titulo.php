@@ -11,6 +11,8 @@ class Titulo extends Model
 
     protected $table = "titulos";
     public $timestamps = false;
+    protected $primaryKey = 'id';
+    
 
     protected $fillable = [
         "id",
@@ -24,6 +26,6 @@ class Titulo extends Model
     
     public function demandantes()
     {
-        return $this->belongsToMany(Demandante::class, 'titulos_demandante', 'id_dem', 'id_titulo');
+        return $this->belongsToMany(Demandante::class, 'titulos_demandante', 'id_titulo', 'id_dem');
     }
 }
