@@ -206,13 +206,7 @@ class TituloController extends Controller
         }
         
         $titulo->ofertas()->detach();
-        foreach ($titulo->ofertas as $oferta) {
-            $oferta->delete();
-        }
         $titulo->demandantes()->detach();
-        foreach ($titulo->demandantes as $demandante) {
-            $demandante->delete();
-        }
 
         // Eliminar el título
         $titulo->delete();
