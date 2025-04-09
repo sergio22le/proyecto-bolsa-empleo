@@ -32,7 +32,7 @@ function Login() {
           sessionStorage.setItem('usuario', usuario);
           sessionStorage.setItem('tipo', tipoUsuario);
           
-          window.location.href = `http://localhost:5173/home/${idUsuario}`;
+          window.location.href = `http://localhost:5173/home`;
           console.log(idUsuario);
         }
       } else {

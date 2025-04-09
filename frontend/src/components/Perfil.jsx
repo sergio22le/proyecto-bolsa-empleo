@@ -33,7 +33,7 @@ const Perfil = ({ usuario }) => {
 
       if (response.ok) {
         console.log("Datos actualizados correctamente:", data);
-        window.location.href = `/home/${usuario?.id}`;
+        window.location.href = `/home`;
       } else {
         console.error("Error al actualizar los datos:", data.message);
         setError("Error al actualizar los datos del demandante");
@@ -52,7 +52,7 @@ const Perfil = ({ usuario }) => {
   return (
     <div className="perfil">
       {error ? (
-        <p style={{ color: "red" }}>{error}</p>
+        <p className="error">{error}</p>
       ) : (
         <div className="container-perfil">
           <form className="form-perfil" onSubmit={enviarDatos}>
@@ -83,13 +83,13 @@ const Perfil = ({ usuario }) => {
               </div>
               <div className="situacion">
                   <label className="select-situacion" htmlFor="select-situacion">Situación laboral:</label>
-                  <select className="select-situacion" name="select-situacion" value={datosUsuario.situacion} onChange={modificarDato}>
+                  <select className="select-situacion" name="situacion" value={datosUsuario.situacion} onChange={modificarDato}>
                     <option value="1">Con empleo</option>
                     <option value="0">Sin empleo</option>
                   </select>
                 </div>
             </div>
-            <button className="guardar" type="submit">Guardar cambios</button>
+            <button className="guardar" type="submit">Guardar cambios y volver</button>
           </form>
         </div>
       )}

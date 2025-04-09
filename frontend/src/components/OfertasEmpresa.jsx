@@ -151,7 +151,7 @@ const OfertasEmpresa = () => {
               <OfertaEmpresa key={oferta.id} oferta={oferta} />
             ))
           ) : (
-            !cargando ? (
+            cargando ? (
               <div className="cargando">
                 <p>Cargando ofertas...</p>
               </div>

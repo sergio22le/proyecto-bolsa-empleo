@@ -1,46 +1,49 @@
 import { useEffect, useState } from "react";
-import Perfil from "../components/Perfil.jsx"
-import Titulos from "../components/Titulos.jsx";
+import Perfil from "../components/Perfil.jsx";
 import OfertasDemandante from "../components/OfertasDemandante.jsx";
+import Titulos from "../components/Titulos.jsx";
 
 const HomeDemandante = () => {
     const [funcion, setFuncion] = useState("verOfertas");
-    const [usuario, setUsuario] = useState();
-    const [idDemandante, setIdUsuario] = useState();
-    
+    const [usuario, setUsuario] = useState(null); // Inicializa como null en lugar de undefined
+    const [idDemandante, setIdUsuario] = useState(null); // Inicializa como null
+
     const tokenUsuario = sessionStorage.getItem("token");
 
     const obtenerUsuario = async () => {
         try {
-          const response = await fetch("http://localhost:8000/api/user", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${tokenUsuario}`,
-            },
-          });
-    
-          const data = await response.json();
-    
-          if (response.ok) {
-            setUsuario(data.demandante);
-            setIdUsuario(data.usuario.id);
-          } 
+            const response = await fetch("http://localhost:8000/api/user", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${tokenUsuario}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setUsuario(data.demandante);
+                setIdUsuario(data.usuario.id);
+            }
         } catch (e) {
-          console.log(e.message);
+            console.log(e.message);
         }
-      };
+    };
 
     useEffect(() => {
         obtenerUsuario();
-    },[])
-    
-    const estadoFuncion = {
-        verOfertas: <OfertasDemandante />,
-        actualizarPerfil: <Perfil key={idDemandante} usuario={usuario}/>,
-        actualizarTitulos: <Titulos key={idDemandante} usuario={usuario}/>
-    };
+    }, []);
 
+    // Solo renderiza los componentes hijos si `usuario` tiene datos
+    const estadoFuncion = usuario
+        ? {
+              verOfertas: <OfertasDemandante />,
+              actualizarPerfil: <Perfil key={idDemandante} usuario={usuario} />,
+              actualizarTitulos: <Titulos key={idDemandante} usuario={usuario} />,
+          }
+        : null;
+          
     return (
         <section className="section-funciones">
             <div className="funciones">
@@ -54,7 +57,7 @@ const HomeDemandante = () => {
                     className="actualizar-perfil"
                     onClick={() => setFuncion("actualizarPerfil")}
                 >
-                    <h4>Perfil</h4>
+                    <h4>Actualizar Perfil</h4>
                 </div>
                 <div
                     className="actualizarTitulos"
@@ -64,7 +67,7 @@ const HomeDemandante = () => {
                 </div>
             </div>
             <div className="funcion-actual">
-                {estadoFuncion[funcion]}
+                {estadoFuncion ? estadoFuncion[funcion] : <p>Cargando...</p>}
             </div>
         </section>
     );

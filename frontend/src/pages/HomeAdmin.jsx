@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Titulos from "../components/Titulos";
 import Empresas from "../components/Empresas";
+import Titulos from "../components/Titulos";
 
 const HomeAdmin = () => {
     

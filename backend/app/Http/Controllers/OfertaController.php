@@ -572,11 +572,18 @@ class OfertaController extends Controller
         }
 
         $apuntado->update(['adjudicada' => "Sí"]);
+        $oferta->num_puesto -= 1;
+        if($oferta->num_puesto == 0)
+            $oferta->abierta = 0;
+        $oferta->save();
 
-        return response()->json(["message" => "Oferta adjudicada al demandante", "status" => 200], 200);
+        return response()->json([
+            "message" => "Oferta adjudicada al demandante",
+            "status" => 200], 200);
     }
 
     //Muestra los demandantes apuntados a una oferta
+    //TODO: Filtrar solo los que no estan apuntados
     public function getPostulantes(string $id)
     {
         $user = Auth::guard('sanctum')->user();
@@ -617,7 +624,7 @@ class OfertaController extends Controller
             ];
             return response()->json($data, 403);
         }
-
+        Demandante::with('titulos', 'ofertas');
         $apuntados = ApuntadoOferta::where('id_oferta', $id)->with('demandante')->get();
         
         $data = [
@@ -672,7 +679,11 @@ class OfertaController extends Controller
         $titulos = $oferta->titulos->pluck('id');
         $demandantes = Demandante::with('titulos')->get();
         $demandantesFiltrados = [];
+        $demandantesInscritos = $oferta->demandantes->pluck('id');
         foreach ($demandantes as $demandante) {
+            if($demandantesInscritos->contains($demandante->id))
+                continue;
+
             $titulosDemandante = $demandante->titulos->pluck('id_titulo');
     
             if($titulos->intersect($titulosDemandante)->count())

@@ -64,12 +64,29 @@ button:hover {
   color:white;
 }
 
+.error {
+  color: var(--color-boton-rechazar);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: auto;
+  padding: 10px;
+}
+
 .cargando {
   text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: auto;
+  padding: 10px;
 }
 
 .info {
   text-align: center;
+  padding: 50px;
+}
+
+.destacado {
+  font-weight:700;
 }
 
 /* ===== Header ===== */
@@ -287,6 +304,10 @@ section {
   height: 100%;
 }
 
+.funcion-actual {
+  margin: auto 0;
+}
+
 .section-funciones {
   display: flex;
   flex-direction: column;
@@ -312,6 +333,31 @@ section {
 
 .funciones button .cerrar-oferta {
   background-color: var(--color-boton-rechazar);
+}
+
+.pendiente-validacion {
+  background-color: var(--color-fondo-funciones);
+  border-bottom: 1px solid var(--color-borde-elementos);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;;
+  justify-content: center;
+  margin: auto;
+  padding: 100px;
+}
+
+.cargando {
+  margin: auto;
+}
+
+.container-empresa .div-boton {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  margin: auto;
+  padding: 10px 20px;
 }
 
 /* ===== DetalleOferta ===== */
@@ -518,6 +564,10 @@ section {
   font-weight: 600;
 }
 
+.desinscribirte {
+  background-color: var(--color-boton-rechazar);
+}
+
 /* ===== Perfil ===== */
 .perfil {
     text-align: center;
@@ -656,7 +706,7 @@ p.info-titulos {
   gap: 20px;
   width: 40%;
   height: auto;
-  margin: auto;
+  margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 30px 30px;
@@ -664,6 +714,7 @@ p.info-titulos {
 
 .añadir-titulo .submit {
   margin-top: 10px;
+  justify-content: center;
   align-items: center;
 }
 
@@ -673,7 +724,7 @@ p.info-titulos {
 
 .añadir-titulo div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   width: 50%;
 }
@@ -681,7 +732,8 @@ p.info-titulos {
 .añadir-titulo input {
   height: auto;
   padding: 5px;
-  width: 100%;
+  width: 80%;
+  margin: auto;
   border: 1px solid var(--color-borde-elementos);
   border-radius: 5px;
 }
@@ -689,7 +741,8 @@ p.info-titulos {
 .añadir-titulo select {
   height: auto;
   padding: 5px;
-  width: 100%;
+  width: 50%;
+  margin: auto;
   border: 1px solid var(--color-borde-elementos);
   border-radius: 5px;
 }
@@ -716,11 +769,31 @@ p.info-titulos {
   justify-items: left;
   align-items: center;
   gap: 50px;
-  padding: 0 30px;
 }
 
 .eliminar {
   background-color: var(--color-boton-rechazar);
+}
+
+.formulario-actualizar {
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 70px;
+  justify-content: end;
+  align-items: baseline;
+}
+
+.formulario-cursando {
+  display: flex;
+  flex-direction: column;
+}
+
+.boton-actualizar {
+  background-color: var(--color-boton-primario);
+  align-items: end;
+  justify-content: space-around;
+  margin: auto;
 }
 
 /* ===== Solicitudes ===== */
@@ -797,4 +870,84 @@ p.info-titulos {
 
 .rechazar {
   background-color: var(--color-boton-rechazar);
+}
+
+/* ===== Demandantes ===== */
+
+.mis-ofertas {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: var(--color-fondo-elementos);
+}
+
+.mis-ofertas h2 {
+  text-align: left;
+  padding: 0 50px;
+}
+
+.mis-ofertas .oferta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  gap: 20px;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+.oferta .oferta-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+}
+
+.oferta {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  gap: 20px;
+  padding: 10px;
+  border: 1px solid var(--color-borde-elementos);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: var(--color-fondo-elementos);
+}
+
+.candidatos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidato-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  text-align: left;
+  padding: 10px;
 }

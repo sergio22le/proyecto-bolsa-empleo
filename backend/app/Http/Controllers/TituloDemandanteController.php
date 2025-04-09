@@ -256,7 +256,8 @@ class TituloDemandanteController extends Controller
                 ->where('id_titulo', $tit)
                 ->update($request->only(['id_titulo', 'centro', 'año', 'cursando']));
 
-        $titulo = TituloDemandante::where('id_dem', $dem)->where('id_titulo', $request->id_titulo)->first();
+        $titulo = TituloDemandante::where('id_dem', $dem)
+        ->where('id_titulo', $request->id_titulo ? $request->id_titulo : $tit)->first();
     
         $data = [
             "message" => "Título actualizado",

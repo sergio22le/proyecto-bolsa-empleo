@@ -6,11 +6,11 @@ const Titulos = ({ usuario }) => {
     const [titulos, setTitulos] = useState([]);
     const [estado, setEstado] = useState("comprobando");
     const [nuevoTitulo, setNuevoTitulo] = useState({
-        id_titulo: "",
+        id_titulo: 1,
         centro: "",
         año: "",
-        cursando: "",
-        nombre: "",
+        cursando: "No",
+        nombre: ""
     });
     const [cargando, setCargando] = useState(true);
 
@@ -18,6 +18,7 @@ const Titulos = ({ usuario }) => {
     const tipo = sessionStorage.getItem("tipo");
 
     const getTitulosUsuario = async () => {
+
         try {
             const response = await fetch(`http://localhost:8000/api/demandantes/${usuario.id}/titulos`, {
                 method: "GET",
@@ -61,7 +62,7 @@ const Titulos = ({ usuario }) => {
 
     const añadirTitulo = async (e) => {
         e.preventDefault();
-
+        console.log("NUEVO TITULO: ", nuevoTitulo);
         try {
             const endpoint = tipo === "demandante"
                 ? `http://localhost:8000/api/demandantes/${usuario.id}/titulos`
@@ -91,7 +92,12 @@ const Titulos = ({ usuario }) => {
     };
 
     const modificarDato = (e) => {
-        setNuevoTitulo({ ...nuevoTitulo, [e.target.name]: e.target.value });
+        console.log(nuevoTitulo);
+        const { name, value } = e.target;
+        setNuevoTitulo((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     useEffect(() => {
@@ -107,6 +113,10 @@ const Titulos = ({ usuario }) => {
         cargarDatos();
     }, [estado]);
 
+    const renderizar = () => {
+        getTitulos();
+    };
+    
     return (
         <div className="titulos">
             {cargando ? (
@@ -131,11 +141,11 @@ const Titulos = ({ usuario }) => {
                             <div className="container-titulos">
                                 {(tipo === "demandante" && titulosUsuario.length > 0) ? (
                                     titulosUsuario.map((titulo) => (
-                                        <Titulo key={titulo.id} titulo={titulo} />
+                                        <Titulo key={titulo.id} titulo={titulo} usuario={usuario} />
                                     ))
                                 ) : (tipo === "admin" && titulos.length > 0) ? (
                                     titulos.map((titulo) => (
-                                        <Titulo key={titulo.id} titulo={titulo} />
+                                        <Titulo key={titulo.id} titulo={titulo} onEliminar={renderizar}/>
                                     ))
                                 ) : (
                                     <p className="info-titulos">No tienes títulos adjuntados.</p>
@@ -149,7 +159,7 @@ const Titulos = ({ usuario }) => {
                                     <>
                                         <div>
                                             <label htmlFor="id_titulo">Título</label>
-                                            <select className="id_titulo" name="id_titulo" required>
+                                            <select className="id_titulo" name="id_titulo" onChange={modificarDato} required>
                                                 {titulos.length > 0 ? (
                                                     titulos.map((titulo) => (
                                                         <option key={titulo.id} value={titulo.id}>{titulo.nombre}</option>

@@ -10,6 +10,10 @@ const Empresa = ({ empresa, validar, rechazar }) => {
                     <h4>Empresa</h4>
                     <p className="empresa">{empresa.nombre}</p>
                 </div>
+                <div className="localidad">
+                    <h4>Empresa</h4>
+                    <p className="localidad">{empresa.localidad}</p>
+                </div>
             </div>
             <div className="div-boton">
                 <button className="boton-aceptar" onClick={() => validar(empresa.id)}>Validar</button>

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 
-const Solicitud = ({ oferta }) => {
+const Solicitud = ({ oferta, onAdjudicar }) => {
   const tokenUsuario = sessionStorage.getItem("token");
 
   const [postulantes, setPostulantes] = useState([]);
 
   const obtenerPostulantes = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/ofertas/postulantes/${oferta.id}`,
+      const response = await fetch(`http://localhost:8000/api/ofertas/postulantes/${oferta.id}`,
         {
           method: "GET",
           headers: {
@@ -21,7 +20,11 @@ const Solicitud = ({ oferta }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setPostulantes(data.postulantes);
+        const postulantesSinAdjudicar = data.postulantes.filter(
+          (postulante) => postulante.adjudicada === "No"
+        );
+        setPostulantes(postulantesSinAdjudicar);
+        console.log("Postulantes sin adjudicar:", postulantes);
       } else {
         console.error("Error al obtener los postulantes:", response.statusText);
       }
@@ -48,6 +51,7 @@ const Solicitud = ({ oferta }) => {
   
         if (response.ok) {
           console.log("Oferta adjudicada correctamente", data);
+          onAdjudicar(); // Llama al callback para actualizar la lista de postulantes
         } else {
           console.error("Error al obtener los postulantes:", response.statusText);
         }

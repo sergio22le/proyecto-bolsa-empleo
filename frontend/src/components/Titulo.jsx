@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Titulo = ({ titulo }) => {
+const Titulo = ({ titulo, onEliminar }) => {
 
     const tokenUsuario = sessionStorage.getItem("token");
     const tipo = sessionStorage.getItem("tipo");
@@ -68,6 +68,7 @@ const Titulo = ({ titulo }) => {
 
             if (response.ok) {
                 console.log("Titulo, borrado:", data.titulo);
+                onEliminar();
             }
         }
         catch (e) {
@@ -81,44 +82,48 @@ const Titulo = ({ titulo }) => {
 
     return (
         <>
-        {tipo === "demandante" ? (
-        <div className="container-titulo">
-            <h2>{nombreTitulo}</h2>
-            <div className="datos-titulo">
-                <div>
-                    <h4>Centro</h4>
-                    <p>{titulo.centro}</p>
+            {tipo === "demandante" ? (
+                <div className="container-titulo">
+                    <h2>{nombreTitulo}</h2>
+                    <div className="datos-titulo">
+                        <div>
+                            <h4>Centro</h4>
+                            <p>{titulo.centro}</p>
+                        </div>
+                        <div>
+                            <h4>Año</h4>
+                            <p>{titulo.año}</p>
+                        </div>
+                        <div>
+                            <h4>Cursando</h4>
+                            <p>{titulo.cursando}</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h4>Año</h4>
-                    <p>{titulo.año}</p>
+            ) : (
+                <div className="container-titulo">
+                    <div className="datos-titulo">
+                        <div>
+                            <h4>Id</h4>
+                            <p>{titulo.id}</p>
+                        </div>
+                        <div>
+                            <h4>Nombre</h4>
+                            <p>{titulo.nombre}</p>
+                        </div>
+                        <div>
+                            <button
+                                className="eliminar"
+                                onClick={() => eliminarTitulo(titulo.id)}
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h4>Cursando</h4>
-                    <p>{titulo.cursando}</p>
-                </div>
-            </div>
-        </div>
-        ) : (
-        <div className="container-titulo">
-            <div className="datos-titulo">
-                <div>
-                    <h4>Id</h4>
-                    <p>{titulo.id}</p>
-                </div>
-                <div>
-                    <h4>Nombre</h4>
-                    <p>{titulo.nombre}</p>
-                </div>
-                <div>
-                    <button className="eliminar" onClick={() => eliminarTitulo(titulo.id)}>Eliminar</button>
-                </div>
-            </div>
-        </div>
-        )}
+            )}
         </>
-    
-    )
+    );
 }
 
 export default Titulo;
