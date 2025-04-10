@@ -3,13 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Demandante;
+use App\Models\Oferta;
+use App\Models\UsuarioDemandante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DemandanteController extends Controller
 {
+    //Lista completa de los demandantes
     public function index()
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'admin') {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
         $demandantes = Demandante::all();
 
         $data = [
@@ -20,9 +41,15 @@ class DemandanteController extends Controller
         return response()->json($data, 200);
     }
 
+    //NOT_IMPLEMENTED: Añade un demandante
     public function store(Request $request)
     {
-        
+        $data = [
+            "message" => "Funcion no implementada",
+            "status" => 501
+        ];
+        return response()->json($data, 501);
+
         $validator = Validator::make($request->all(), [
             'dni' => 'required|string|size:9',
             'nombre' => 'required|string|max:45',
@@ -68,9 +95,10 @@ class DemandanteController extends Controller
         return response()->json($data, 201);
     }
 
+    //Muestra un demandante, sus titulos y sus ofertas inscritas
     public function show(string $id)
     {
-        $demandante = Demandante::find($id);
+        $demandante = Demandante::with('titulos', 'ofertas')->find($id);
 
         if(!$demandante) {
             $data = [
@@ -88,8 +116,27 @@ class DemandanteController extends Controller
         return response()->json($data, 201);
     }
 
+    //Actualiza la información de un demandante
     public function update(Request $request, string $id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'demandante') {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $usuario_demandante = UsuarioDemandante::find($user->id);
         $demandante = Demandante::find($id);
 
         if(!$demandante) {
@@ -98,6 +145,14 @@ class DemandanteController extends Controller
                 "status" => 404
             ];
             return response()->json($data, 404);
+        }
+
+        if($usuario_demandante->idDemandante != $demandante->id) {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -138,8 +193,15 @@ class DemandanteController extends Controller
         return response()->json($data, 200);
     }
 
+    //NOT_IMPLEMENTED: Elimina un demandante
     public function destroy(string $id)
     {
+        $data = [
+            "message" => "Funcion no implementada",
+            "status" => 501
+        ];
+        return response()->json($data, 501);
+
         $demandante = Demandante::find($id);
 
         if(!$demandante) {
@@ -158,5 +220,63 @@ class DemandanteController extends Controller
         ];
     
         return response()->json($data, 201);
+    }
+
+    //Consultar ofertas disponibles para la titulación
+    public function getOfertas(string $id)
+    {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            $data = [
+                "message" => "Token inválido",
+                "status" => 401
+            ];
+            return response()->json($data, 401);
+        }
+
+        if($user->tipo != 'demandante') {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        $usuario_demandante = UsuarioDemandante::find($user->id);
+        $demandante = Demandante::find($id);
+
+        if(!$demandante) {
+            $data = [
+                "message" => "Demandante no encontrado",
+                "status" => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        if($usuario_demandante->idDemandante != $demandante->id) {
+            $data = [
+                "message" => "Usuario no autorizado",
+                "status" => 403
+            ];
+            return response()->json($data, 403);
+        }
+
+        // Obtener las ofertas disponibles para el demandante
+        $titulos = $demandante->titulos->pluck('id_titulo');
+        $ofertas = Oferta::where('abierta', true)->get();
+        $ofertasFiltradas = [];
+        foreach ($ofertas as $oferta) {
+            $titulosOferta = $oferta->titulos->pluck('id');
+    
+            if($titulos->intersect($titulosOferta)->count())
+                $ofertasFiltradas[] = $oferta;
+        }
+
+        $data = [
+            "ofertas" => $ofertasFiltradas,
+            "status" => 200
+        ];
+
+        return response()->json($data, 200);
     }
 }

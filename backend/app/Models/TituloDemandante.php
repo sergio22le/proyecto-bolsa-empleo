@@ -22,4 +22,13 @@ class TituloDemandante extends Model
         "año",
         "cursando"
     ];
+
+    public function demandante()
+    {
+        return $this->belongsTo(Demandante::class, 'id_dem', 'id');
+    }
+    public function titulo()
+    {
+        return $this->belongsTo(Titulo::class, 'id_titulo', 'id');
+    }
 }

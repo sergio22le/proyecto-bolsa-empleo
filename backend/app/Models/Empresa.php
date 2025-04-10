@@ -20,4 +20,9 @@ class Empresa extends Model
         "localidad",
         "telefono"
     ];
+
+    public function ofertas()
+    {
+        return $this->hasMany(Oferta::class, 'id_emp', 'id');
+    }
 }

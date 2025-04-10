@@ -24,4 +24,17 @@ class Oferta extends Model
         "fecha_cierre",
         "id_emp"
     ];
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'id_emp', 'id');
+    }
+    public function titulos()
+    {
+        return $this->belongsToMany(Titulo::class, 'titulos_oferta', 'id_oferta', 'id_titulo');
+    }
+    public function demandantes()
+    {
+        return $this->belongsToMany(Demandante::class, 'apuntados_oferta', 'id_oferta', 'id_demandante');
+    }
 }
