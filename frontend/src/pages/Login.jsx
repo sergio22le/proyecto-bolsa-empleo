@@ -1,67 +1,111 @@
+// Este componente maneja el inicio de sesión de los usuarios.
+
 import { useState } from "react";
-import "./Login.css";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 function Login() {
-  // Estados para demandante
+  // Estado para almacenar el nombre de usuario ingresado
   const [usuario, setUsuario] = useState("");
+
+  // Estado para almacenar la contraseña ingresada
   const [password, setPassword] = useState("");
+
+  // Estado para manejar errores (como credenciales incorrectas o problemas del servidor)
   const [error, setError] = useState("");
 
-  // Función para manejar el login de demandantes
+  // Función para manejar el inicio de sesión
   const login = async (e) => {
-    // Evitar el comportamiento por defecto del formulario
-    e.preventDefault();
-    // Resetear los posibles errores previos
-    setError("");
+    e.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+    setError(""); // Limpiar errores previos
 
-    // Enviar peticion al backend
-    const response = await fetch("http://127.0.0.1:8000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ usuario: usuario, password: password }),
-      credentials: "include", // Si se usan cookies para mantener sesion
-    });
+    try {
+      // Realizar la solicitud al backend para autenticar al usuario
+      const response = await fetch("http://localhost:8000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, password }), // Enviar el usuario y la contraseña
+      });
 
-    // Convertir la respuesta recibida a JSON
-    const data = await response.json();
-    
-    if (response.ok) {
-      // Si la respuesta es correcta recupera el ID del usuario registrado
-      const idUsuario = data.user.id;
-      // Y lo redirige a su pagina home
-      window.location.href = `http://localhost:5173/home/${idUsuario}`;
-    } else {
-      // Modificar el useState "error" con el error sucedido al intentar logearse
-      setError(data.message);
+      const data = await response.json();
+
+      if (response.ok) {
+        // Si la autenticación es exitosa, obtener los datos del usuario
+        const tokenUsuario = data.token;
+        const idUsuario = data.id;
+        const usuario = data.usuario;
+        const tipoUsuario = data.tipo;
+
+        if (tokenUsuario) {
+          // Guardar los datos del usuario en el almacenamiento de sesión
+          sessionStorage.setItem("idUsuario", idUsuario);
+          sessionStorage.setItem("token", tokenUsuario);
+          sessionStorage.setItem("usuario", usuario);
+          sessionStorage.setItem("tipo", tipoUsuario);
+
+          // Redirigir al usuario a la página principal
+          window.location.href = `http://localhost:5173/home`;
+          console.log(idUsuario);
+        }
+      } else {
+        // Si hay un error en las credenciales, mostrar el mensaje de error
+        setError(data.message || "Error en el inicio de sesión");
+      }
+    } catch (error) {
+      // Manejar errores de conexión o del servidor
+      console.error("Error en la solicitud:", error);
+      setError("Error en el servidor");
     }
   };
 
   return (
-    <div className="login">
-      <Header />
+    <section className="login">
       <div className="login-body">
         <h2>Iniciar Sesión</h2>
         <div className="login-container">
-          <div className="form-login">
-            <h3>Introducir datos</h3>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <form className="form" onSubmit={login}>
+          <h3>Introducir datos</h3>
+          {/* Mostrar mensaje de error si existe */}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <form className="form-login" onSubmit={login}>
+            {/* Campo para ingresar el nombre de usuario */}
+            <div>
               <label htmlFor="usuario">Usuario</label>
-              <input id="usuario" type="text" placeholder="Usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} required/>
+              <input
+                id="usuario"
+                type="text"
+                placeholder="Usuario"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+                required
+              />
+            </div>
+            {/* Campo para ingresar la contraseña */}
+            <div>
               <label htmlFor="password">Contraseña</label>
-              <input id="password" type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-              <button className="iniciar-sesion" type="submit">Iniciar sesión</button>
-            </form>
-            <div className="boton-registro">
-              <button className="registro" onClick={() => (window.location.href = "/registro")}>Regístrate</button>
-            </div>     
+              <input
+                id="password"
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            {/* Botón para enviar el formulario */}
+            <button className="iniciar-sesion" type="submit">
+              Iniciar sesión
+            </button>
+          </form>
+          <div className="boton-registro">
+            {/* Botón para redirigir al formulario de registro */}
+            <button
+              className="registro"
+              onClick={() => (window.location.href = "/registro")}
+            >
+              Regístrate
+            </button>
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </section>
   );
 }
 

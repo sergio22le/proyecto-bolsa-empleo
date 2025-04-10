@@ -1,3 +1,5 @@
+// Este componente representa el pie de página de la aplicación.
+
 import React from "react";
 
 const Footer = () => {
