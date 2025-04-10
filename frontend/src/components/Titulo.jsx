@@ -1,15 +1,21 @@
+// Este componente representa un título individual y muestra su información.
+
 import { useEffect, useState } from "react";
 
 const Titulo = ({ titulo, onEliminar }) => {
-
+    // Token del usuario almacenado en sessionStorage
     const tokenUsuario = sessionStorage.getItem("token");
+
+    // Tipo de usuario almacenado en sessionStorage (admin o demandante)
     const tipo = sessionStorage.getItem("tipo");
 
+    // Estado para almacenar el nombre del título
     const [nombreTitulo, setNombreTitulo] = useState("");
 
+    // Función para obtener el nombre del título desde el backend
     const getNombreTitulo = async () => {
-
         if (tipo === "demandante") {
+            // Si el usuario es un demandante
             try {
                 const response = await fetch(`http://localhost:8000/api/titulos/${titulo.id_titulo}`, {
                     method: "GET",
@@ -17,20 +23,19 @@ const Titulo = ({ titulo, onEliminar }) => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${tokenUsuario}`,
                     },
-                })
-    
+                });
+
                 const data = await response.json();
-    
+
                 if (response.ok) {
-                    return data.titulo.nombre;
+                    return data.titulo.nombre; // Retornar el nombre del título
                 }
-            }
-            catch(e) {
-                console.log(e.message);
+            } catch (e) {
+                console.log(e.message); // Manejar errores en la solicitud
                 return null;
             }
-        }
-        else if (tipo === "admin") {
+        } else if (tipo === "admin") {
+            // Si el usuario es un administrador
             try {
                 const response = await fetch(`http://localhost:8000/api/titulos/${titulo.id}`, {
                     method: "GET",
@@ -38,22 +43,21 @@ const Titulo = ({ titulo, onEliminar }) => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${tokenUsuario}`,
                     },
-                })
-    
+                });
+
                 const data = await response.json();
-    
+
                 if (response.ok) {
-                    return data.titulo.nombre;
+                    return data.titulo.nombre; // Retornar el nombre del título
                 }
-            }
-            catch(e) {
-                console.log(e.message);
+            } catch (e) {
+                console.log(e.message); // Manejar errores en la solicitud
                 return null;
             }
         }
-        
-    }
+    };
 
+    // Función para eliminar un título desde el backend
     const eliminarTitulo = async (id) => {
         try {
             const response = await fetch(`http://localhost:8000/api/titulos/${id}`, {
@@ -62,27 +66,28 @@ const Titulo = ({ titulo, onEliminar }) => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${tokenUsuario}`,
                 },
-            })
+            });
 
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Titulo, borrado:", data.titulo);
-                onEliminar();
+                console.log("Título eliminado:", data.titulo);
+                onEliminar(); // Llamar a la función de eliminación pasada como prop
             }
+        } catch (e) {
+            console.log(e.message); // Manejar errores en la solicitud
         }
-        catch (e) {
-            console.log(e.message);
-        }
-    }
+    };
 
+    // useEffect para obtener el nombre del título al montar el componente
     useEffect(() => {
         setNombreTitulo(getNombreTitulo());
-    },[])
+    }, []);
 
     return (
         <>
             {tipo === "demandante" ? (
+                // Vista para demandantes
                 <div className="container-titulo">
                     <h2>{nombreTitulo}</h2>
                     <div className="datos-titulo">
@@ -101,6 +106,7 @@ const Titulo = ({ titulo, onEliminar }) => {
                     </div>
                 </div>
             ) : (
+                // Vista para administradores
                 <div className="container-titulo">
                     <div className="datos-titulo">
                         <div>
@@ -112,6 +118,7 @@ const Titulo = ({ titulo, onEliminar }) => {
                             <p>{titulo.nombre}</p>
                         </div>
                         <div>
+                            {/* Botón para eliminar el título */}
                             <button
                                 className="eliminar"
                                 onClick={() => eliminarTitulo(titulo.id)}
@@ -124,6 +131,6 @@ const Titulo = ({ titulo, onEliminar }) => {
             )}
         </>
     );
-}
+};
 
 export default Titulo;

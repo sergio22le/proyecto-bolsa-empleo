@@ -1,15 +1,24 @@
+// Este componente representa la página principal para los demandantes.
+
 import { useEffect, useState } from "react";
 import Perfil from "../components/Perfil.jsx";
 import OfertasDemandante from "../components/OfertasDemandante.jsx";
 import Titulos from "../components/Titulos.jsx";
 
 const HomeDemandante = () => {
+    // Estado para controlar la función seleccionada (ver ofertas, actualizar perfil, etc.)
     const [funcion, setFuncion] = useState("verOfertas");
-    const [usuario, setUsuario] = useState(null); // Inicializa como null en lugar de undefined
-    const [idDemandante, setIdUsuario] = useState(null); // Inicializa como null
 
+    // Estado para almacenar los datos del usuario (demandante)
+    const [usuario, setUsuario] = useState(null);
+
+    // Estado para almacenar el ID del demandante
+    const [idDemandante, setIdUsuario] = useState(null);
+
+    // Token del usuario almacenado en sessionStorage
     const tokenUsuario = sessionStorage.getItem("token");
 
+    // Función para obtener los datos del usuario desde el backend
     const obtenerUsuario = async () => {
         try {
             const response = await fetch("http://localhost:8000/api/user", {
@@ -23,29 +32,33 @@ const HomeDemandante = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // Si la solicitud es exitosa, almacenar los datos del usuario
                 setUsuario(data.demandante);
                 setIdUsuario(data.usuario.id);
             }
         } catch (e) {
+            // Manejar errores en la solicitud
             console.log(e.message);
         }
     };
 
+    // useEffect para obtener los datos del usuario al cargar el componente
     useEffect(() => {
         obtenerUsuario();
     }, []);
 
-    // Solo renderiza los componentes hijos si `usuario` tiene datos
+    // Objeto que mapea las funciones seleccionadas a los componentes correspondientes
     const estadoFuncion = usuario
         ? {
-              verOfertas: <OfertasDemandante />,
-              actualizarPerfil: <Perfil key={idDemandante} usuario={usuario} />,
-              actualizarTitulos: <Titulos key={idDemandante} usuario={usuario} />,
+              verOfertas: <OfertasDemandante />, // Componente para ver ofertas disponibles
+              actualizarPerfil: <Perfil key={idDemandante} usuario={usuario} />, // Componente para actualizar el perfil
+              actualizarTitulos: <Titulos key={idDemandante} usuario={usuario} />, // Componente para gestionar títulos
           }
         : null;
-          
+
     return (
         <section className="section-funciones">
+            {/* Opciones de funciones disponibles */}
             <div className="funciones">
                 <div
                     className="ver-ofertas"
@@ -63,9 +76,10 @@ const HomeDemandante = () => {
                     className="actualizarTitulos"
                     onClick={() => setFuncion("actualizarTitulos")}
                 >
-                    <h4>Mis titulos</h4>
+                    <h4>Mis títulos</h4>
                 </div>
             </div>
+            {/* Renderizar el componente correspondiente a la función seleccionada */}
             <div className="funcion-actual">
                 {estadoFuncion ? estadoFuncion[funcion] : <p>Cargando...</p>}
             </div>

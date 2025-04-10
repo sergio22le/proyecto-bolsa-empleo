@@ -1,36 +1,43 @@
+// Este componente permite a los demandantes ver las ofertas disponibles y gestionar las ofertas en las que están inscritos.
+
 import { useEffect, useState } from "react";
 import OfertaDemandante from "./OfertaDemandante";
 
 const OfertasDemandante = () => {
+  // Estado para almacenar las ofertas disponibles para el demandante
   const [ofertasDisponibles, setOfertasDisponibles] = useState([]);
+
+  // Estado para almacenar los datos del usuario (demandante)
   const [usuario, setUsuario] = useState({});
+
+  // Estado para almacenar las ofertas en las que el usuario está inscrito
   const [ofertasApuntado, setOfertasApuntado] = useState([]);
 
+  // Token del usuario almacenado en sessionStorage
   const tokenUsuario = sessionStorage.getItem("token");
 
-  // Obtener datos del usuario
+  // Función para obtener los datos del usuario desde el backend
   const obtenerUsuario = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenUsuario}`,
+          Authorization: `Bearer ${tokenUsuario}`,
         },
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setUsuario(data.demandante);
-        console.log("Obtenidos datos del usuario:", data.demandante);
+        setUsuario(data.demandante); // Almacenar los datos del usuario
       }
     } catch (e) {
       console.log("No se ha podido obtener los datos del usuario:", e.message);
     }
   };
 
-  // Obtener ofertas disponibles
+  // Función para obtener las ofertas disponibles desde el backend
   const obtenerOfertas = async () => {
     if (!usuario.id) return;
     try {
@@ -40,7 +47,7 @@ const OfertasDemandante = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUsuario}`,
+            Authorization: `Bearer ${tokenUsuario}`,
           },
         }
       );
@@ -48,6 +55,7 @@ const OfertasDemandante = () => {
       const data = await response.json();
 
       if (response.ok) {
+        // Filtrar las ofertas abiertas
         setOfertasDisponibles(
           data.ofertas.filter((oferta) => oferta.abierta === 1)
         );
@@ -57,7 +65,7 @@ const OfertasDemandante = () => {
     }
   };
 
-  // Obtener ofertas a las que el usuario está apuntado
+  // Función para obtener las ofertas en las que el usuario está inscrito
   const obtenerOfertasApuntado = async () => {
     if (!usuario.id) return;
 
@@ -68,16 +76,15 @@ const OfertasDemandante = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUsuario}`,
+            Authorization: `Bearer ${tokenUsuario}`,
           },
         }
       );
 
       const data = await response.json();
-      console.log("Datos de ofertas apuntadas:", data.demandante.ofertas);
 
       if (response.ok) {
-        setOfertasApuntado(data.demandante.ofertas);
+        setOfertasApuntado(data.demandante.ofertas); // Almacenar las ofertas inscritas
       }
     } catch (e) {
       console.log(e.message);
@@ -93,7 +100,7 @@ const OfertasDemandante = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUsuario}`,
+            Authorization: `Bearer ${tokenUsuario}`,
           },
           body: JSON.stringify({
             id_oferta: idOferta,
@@ -105,7 +112,7 @@ const OfertasDemandante = () => {
       if (response.ok) {
         console.log("Te has inscrito en la oferta:", idOferta);
 
-        // Actualizar estados
+        // Actualizar las ofertas disponibles y las ofertas inscritas
         setOfertasDisponibles((prev) =>
           prev.filter((oferta) => oferta.id !== idOferta)
         );
@@ -132,7 +139,7 @@ const OfertasDemandante = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUsuario}`,
+            Authorization: `Bearer ${tokenUsuario}`,
           },
           body: JSON.stringify({
             id_oferta: idOferta,
@@ -144,7 +151,7 @@ const OfertasDemandante = () => {
       if (response.ok) {
         console.log("Te has desinscrito de la oferta:", idOferta);
 
-        // Actualizar estados
+        // Actualizar las ofertas inscritas y las ofertas disponibles
         const ofertaDesinscrita = ofertasApuntado.find(
           (oferta) => oferta.oferta.id === idOferta
         );
@@ -165,11 +172,12 @@ const OfertasDemandante = () => {
     }
   };
 
-  // Cargar datos iniciales
+  // useEffect para cargar los datos iniciales al montar el componente
   useEffect(() => {
     obtenerUsuario();
   }, []);
 
+  // useEffect para cargar las ofertas cuando se obtienen los datos del usuario
   useEffect(() => {
     if (usuario.id) {
       obtenerOfertas();
@@ -208,6 +216,6 @@ const OfertasDemandante = () => {
       )}
     </div>
   );
-}
+};
 
 export default OfertasDemandante;

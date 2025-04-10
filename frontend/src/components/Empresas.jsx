@@ -1,11 +1,16 @@
+// Este componente muestra las empresas pendientes de verificación y permite validarlas o rechazarlas.
+
 import { useEffect, useState } from "react";
 import Empresa from "./Empresa";
 
 const Empresas = () => {
-
+    // Estado para manejar errores
     const [error, setError] = useState("");
+
+    // Estado para almacenar las empresas pendientes de verificación
     const [empresasSinVerificar, setEmpresasSinVerificar] = useState(["vacio"]);
 
+    // Función para obtener todas las empresas desde el backend
     const getEmpresas = async () => {
         const tokenUsuario = sessionStorage.getItem("token");
 
@@ -21,24 +26,24 @@ const Empresas = () => {
             const data = await response.json();
 
             if (response.ok) {
-                return data;
+                return data; // Retornar los datos obtenidos
             } else {
                 setError("Error al obtener las empresas");
             }
         } catch (error) {
-            setError(error.message);
+            setError(error.message); // Manejar errores en la solicitud
         }
     };
 
+    // useEffect para cargar las empresas al montar el componente
     useEffect(() => {
         const obtenerYFiltrarEmpresas = async () => {
             try {
                 const data = await getEmpresas();
-                console.log("Datos recibidos:", data);
-        
+
+                // Filtrar las empresas que no han sido validadas
                 const empresasPorVerificar = data.empresas.filter((emp) => emp.validado === 0);
-                console.log("Empresas por verificar:", empresasPorVerificar);
-        
+
                 if (empresasPorVerificar.length > 0) {
                     setEmpresasSinVerificar(empresasPorVerificar);
                 } else {
@@ -48,11 +53,11 @@ const Empresas = () => {
                 setError(error.message);
             }
         };
-        
+
         obtenerYFiltrarEmpresas();
-        
     }, []);
 
+    // Función para validar una empresa
     const validar = async (id) => {
         const tokenUsuario = sessionStorage.getItem("token");
 
@@ -66,19 +71,19 @@ const Empresas = () => {
             });
 
             if (response.ok) {
+                // Actualizar la lista de empresas pendientes de verificación
                 const empresasActualizadas = await getEmpresas();
                 const empresasPorVerificar = empresasActualizadas.empresas.filter((emp) => emp.validado === 0);
                 setEmpresasSinVerificar(empresasPorVerificar);
             } else {
                 setError("Error al validar la empresa");
             }
-        }
-        catch (error) {
+        } catch (error) {
             setError(error.message);
         }
+    };
 
-    }
-
+    // Función para rechazar una empresa
     const rechazar = async (id) => {
         const tokenUsuario = sessionStorage.getItem("token");
 
@@ -92,30 +97,41 @@ const Empresas = () => {
             });
 
             if (response.ok) {
+                // Actualizar la lista de empresas pendientes de verificación
                 const empresasActualizadas = await getEmpresas();
                 const empresasPorVerificar = empresasActualizadas.empresas.filter((emp) => emp.validado === 0);
                 setEmpresasSinVerificar(empresasPorVerificar);
             } else {
                 setError("Error al rechazar la empresa");
             }
-        }
-        catch (error) {
+        } catch (error) {
             setError(error.message);
         }
-
-    }
+    };
 
     return (
         <div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {/* Mostrar mensaje de error si existe */}
+            {error && <p className="error">{error}</p>}
+
+            {/* Mostrar mensaje de carga mientras se obtienen las empresas */}
             {empresasSinVerificar[0] === "vacio" ? (
                 <p className="info">Cargando empresas...</p>
-            ) : (empresasSinVerificar.length > 0 ? (
-                empresasSinVerificar.map((empresa) => (
-                    <Empresa key={empresa.id} empresa={empresa} rechazar={rechazar} validar={validar}/>
-            ))) : (
-                <p className="info">No hay empresas sin verificar</p>
-            )
+            ) : (
+                empresasSinVerificar.length > 0 ? (
+                    // Renderizar las empresas pendientes de verificación
+                    empresasSinVerificar.map((empresa) => (
+                        <Empresa
+                            key={empresa.id}
+                            empresa={empresa}
+                            rechazar={rechazar}
+                            validar={validar}
+                        />
+                    ))
+                ) : (
+                    // Mostrar mensaje si no hay empresas pendientes de verificación
+                    <p className="info">No hay empresas sin verificar</p>
+                )
             )}
         </div>
     );

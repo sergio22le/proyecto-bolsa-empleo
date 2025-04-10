@@ -1,11 +1,16 @@
+// Este componente muestra las solicitudes asociadas a las ofertas de una empresa.
+
 import { useEffect, useState } from "react";
 import Solicitud from "./Solicitud";
 
 const Solicitudes = ({ usuario }) => {
+    // Token del usuario almacenado en sessionStorage
     const tokenUsuario = sessionStorage.getItem("token");
 
+    // Estado para almacenar las ofertas asociadas al usuario (empresa)
     const [ofertas, setOfertas] = useState([]);
 
+    // Función para obtener las ofertas desde el backend
     const obtenerOfertas = async () => {
         try {
             const response = await fetch(`http://localhost:8000/api/ofertas`, {
@@ -19,29 +24,31 @@ const Solicitudes = ({ usuario }) => {
             const data = await response.json();
 
             if (response.ok) {
+                // Filtrar las ofertas que pertenecen a la empresa del usuario y están abiertas
                 const ofertasEmpresa = data.ofertas.filter(
                     (oferta) => oferta.id_emp === usuario.id && oferta.abierta === 1
                 );
-                setOfertas(ofertasEmpresa);
+                setOfertas(ofertasEmpresa); // Almacenar las ofertas en el estado
             }
         } catch (e) {
-            console.log("Error al obtener las ofertas:", e.message);
+            console.log("Error al obtener las ofertas:", e.message); // Manejar errores en la solicitud
         }
     };
 
-    // Llama a obtenerOfertas al montar el componente
+    // useEffect para obtener las ofertas al montar el componente
     useEffect(() => {
         obtenerOfertas();
     }, []);
 
-    // Callback para actualizar las ofertas después de adjudicar
+    // Callback para actualizar las ofertas después de adjudicar una solicitud
     const adjudicarOferta = () => {
-        obtenerOfertas(); // Vuelve a cargar las ofertas
+        obtenerOfertas(); // Vuelve a cargar las ofertas desde el backend
     };
 
     return (
         <div className="container-solicitudes">
             <h2>Solicitudes</h2>
+            {/* Renderizar las ofertas asociadas al usuario */}
             {ofertas.map((oferta) => (
                 <Solicitud
                     key={oferta.id}

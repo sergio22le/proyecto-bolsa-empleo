@@ -1,7 +1,12 @@
+// Este componente maneja el registro de usuarios (demandantes o empresas).
+
 import React, { useState } from "react";
 
 const Registro = () => {
+  // Estado para determinar el tipo de registro (demandante o empresa)
   const [tipoRegistro, setTipoRegistro] = useState("demandante");
+
+  // Estado para almacenar los datos del formulario
   const [formData, setFormData] = useState({
     nombre: "",
     ape1: "",
@@ -19,23 +24,28 @@ const Registro = () => {
     tipo: "demandante",
   });
 
+  // Estado para manejar errores específicos y generales
   const [errors, setErrors] = useState({});
   const [errorGeneral, setErrorGeneral] = useState("");
 
+  // Función para actualizar los datos del formulario
   const actualizarDatos = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Función para enviar los datos del formulario al backend
   const enviarDatos = async (e) => {
     e.preventDefault();
     setErrors({});
     setErrorGeneral("");
 
+    // Validar que las contraseñas coincidan
     if (formData.password !== formData.confirmPassword) {
       setErrorGeneral("Las contraseñas no coinciden");
       return;
     }
 
+    // Preparar los datos según el tipo de registro
     const dataToSend =
       tipoRegistro === "demandante"
         ? {
@@ -61,6 +71,7 @@ const Registro = () => {
           };
 
     try {
+      // Enviar los datos al backend
       const response = await fetch(`http://localhost:8000/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,6 +79,7 @@ const Registro = () => {
       });
 
       const data = await response.json();
+
       if (response.ok) {
         alert("Registro exitoso. Ya puedes iniciar sesión.");
         window.location.href = `http://localhost:5173`;
@@ -86,6 +98,7 @@ const Registro = () => {
     <section className="registro">
       <div className="registro-body">
         <h2>Registro</h2>
+        {/* Botones para seleccionar el tipo de registro */}
         <div className="seleccion-usuario">
           <button
             className={tipoRegistro === "demandante" ? "activo" : ""}
@@ -101,10 +114,13 @@ const Registro = () => {
           </button>
         </div>
         <div className="div-form">
+          {/* Formulario de registro */}
           <form onSubmit={enviarDatos} className="form-registro">
+            {/* Mostrar errores generales */}
             {errorGeneral && <p className="error">{errorGeneral}</p>}
             {tipoRegistro === "demandante" && (
               <>
+                {/* Campos específicos para demandantes */}
                 <div>
                   <label htmlFor="nombre">Nombre</label>
                   <input
@@ -233,6 +249,7 @@ const Registro = () => {
             )}
             {tipoRegistro === "empresa" && (
               <>
+                {/* Campos específicos para empresas */}
                 <div>
                   <label htmlFor="nombre">Nombre</label>
                   <input
