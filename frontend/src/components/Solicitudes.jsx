@@ -52,7 +52,7 @@ const Solicitudes = ({ usuario }) => {
             {ofertas.map((oferta) => (
                 <Solicitud
                     key={oferta.id}
-                    oferta={oferta}
+                    oferta={oferta} // Renderiza los postulantes asociados a la oferta
                     onAdjudicar={adjudicarOferta} // Pasa el callback al componente hijo
                 />
             ))}

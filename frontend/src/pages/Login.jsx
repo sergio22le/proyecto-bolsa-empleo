@@ -1,4 +1,4 @@
-// Este componente maneja el inicio de sesión de los usuarios.
+
 
 import { useState } from "react";
 

@@ -59,6 +59,7 @@ const Solicitud = ({ oferta, onAdjudicar }) => {
 
       if (response.ok) {
         console.log("Oferta adjudicada correctamente", data);
+        obtenerPostulantes(); // Volver a cargar los postulantes después de adjudicar
         onAdjudicar(); // Llamar al callback para actualizar la lista de postulantes
       } else {
         console.error("Error al adjudicar la oferta:", response.statusText);
@@ -72,6 +73,10 @@ const Solicitud = ({ oferta, onAdjudicar }) => {
   useEffect(() => {
     obtenerPostulantes();
   }, []);
+
+  useEffect(() => {
+    console.log("Postulantes actualizados:", postulantes);
+  }, [postulantes]); 
 
   return (
     <div className="container-solicitud">
