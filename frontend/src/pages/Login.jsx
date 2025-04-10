@@ -1,5 +1,5 @@
 
-
+import { API_URL } from "../config";
 import { useState } from "react";
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
 
     try {
       // Realizar la solicitud al backend para autenticar al usuario
-      const response = await fetch("http://localhost:8000/api/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, password }), // Enviar el usuario y la contraseña

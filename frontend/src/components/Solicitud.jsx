@@ -1,5 +1,5 @@
 // Este componente muestra los postulantes asociados a una oferta y permite adjudicar o rechazar postulantes.
-
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 
 const Solicitud = ({ oferta, onAdjudicar }) => {
@@ -13,7 +13,7 @@ const Solicitud = ({ oferta, onAdjudicar }) => {
   const obtenerPostulantes = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/ofertas/postulantes/${oferta.id}`,
+        `${API_URL}/ofertas/postulantes/${oferta.id}`,
         {
           method: "GET",
           headers: {
@@ -44,7 +44,7 @@ const Solicitud = ({ oferta, onAdjudicar }) => {
   const adjudicarOferta = async (idDemandante) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/ofertas/adjudicar`,
+        `${API_URL}/ofertas/adjudicar`,
         {
           method: "PATCH",
           headers: {

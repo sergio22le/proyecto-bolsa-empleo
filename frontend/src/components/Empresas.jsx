@@ -1,5 +1,5 @@
 // Este componente muestra las empresas pendientes de verificación y permite validarlas o rechazarlas.
-
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 import Empresa from "./Empresa";
 
@@ -15,7 +15,7 @@ const Empresas = () => {
         const tokenUsuario = sessionStorage.getItem("token");
 
         try {
-            const response = await fetch("http://localhost:8000/api/empresas", {
+            const response = await fetch(`${API_URL}/empresas`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const Empresas = () => {
         const tokenUsuario = sessionStorage.getItem("token");
 
         try {
-            const response = await fetch(`http://localhost:8000/api/empresas/validate=${id}`, {
+            const response = await fetch(`${API_URL}/empresas/validate=${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const Empresas = () => {
         const tokenUsuario = sessionStorage.getItem("token");
 
         try {
-            const response = await fetch(`http://localhost:8000/api/empresas/reject=${id}`, {
+            const response = await fetch(`${API_URL}/empresas/reject=${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

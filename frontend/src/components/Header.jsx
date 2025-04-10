@@ -1,5 +1,5 @@
 // Este componente representa el encabezado de la aplicación, mostrando el título y un botón para cerrar sesión si el usuario está autenticado.
-
+import { API_URL } from "../config";
 import React, { useState, useEffect } from "react";
 
 const Header = () => {
@@ -22,7 +22,7 @@ const Header = () => {
     const logout = async () => {
       try {
         // Realizar una solicitud al backend para cerrar sesión
-        const response = await fetch("http://localhost:8000/api/logout", {
+        const response = await fetch(`${API_URL}/logout`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
