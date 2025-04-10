@@ -1,5 +1,5 @@
 // Este componente maneja el registro de usuarios (demandantes o empresas).
-
+import { API_URL } from "../config";
 import React, { useState } from "react";
 
 const Registro = () => {
@@ -72,7 +72,7 @@ const Registro = () => {
 
     try {
       // Enviar los datos al backend
-      const response = await fetch(`http://localhost:8000/api/register`, {
+      const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),

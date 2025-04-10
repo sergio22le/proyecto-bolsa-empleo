@@ -1,5 +1,5 @@
 // Este componente representa la página principal para las empresas.
-
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 import Solicitudes from "../components/Solicitudes";
 import Demandantes from "../components/Demandantes";
@@ -21,7 +21,7 @@ const HomeEmpresa = () => {
     // Función para obtener los datos del usuario desde el backend
     const obtenerDatosUsuario = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/user", {
+            const response = await fetch(`${API_URL}/user`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

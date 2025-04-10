@@ -1,5 +1,5 @@
 // Este componente permite a los usuarios actualizar su perfil personal.
-
+import { API_URL } from "../config";
 import React, { useState } from "react";
 
 const Perfil = ({ usuario }) => {
@@ -28,7 +28,7 @@ const Perfil = ({ usuario }) => {
   // Función para enviar los datos actualizados al backend
   const actualizarDatos = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/demandantes/${usuario.id}`, {
+      const response = await fetch(`${API_URL}/demandantes/${usuario.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
