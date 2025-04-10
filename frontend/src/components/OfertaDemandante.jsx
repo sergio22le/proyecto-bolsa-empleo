@@ -1,45 +1,10 @@
-// Este componente representa una oferta individual creada por una empresa y permite gestionarla.
+// Este componente representa una oferta individual disponible para un demandante y permite inscribirse o desinscribirse.
 
-import { useState } from "react";
-
-const OfertaEmpresa = ({ oferta }) => {
-  // Token del usuario almacenado en sessionStorage
-  const tokenUsuario = sessionStorage.getItem("token");
-
-  // Estado para controlar si la oferta está abierta o cerrada
-  const [estado, setEstado] = useState(oferta.abierta === 1 ? "abierta" : "cerrada");
-
-  // Función para cerrar una oferta
-  const cerrarOferta = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/ofertas/cerrar/${oferta.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenUsuario}`,
-        },
-      });
-
-      if (response.ok) {
-        // Cambiar el estado de la oferta a "cerrada"
-        setEstado("cerrada");
-      } else {
-        console.error("Error al cerrar la oferta: ", response.statusText);
-      }
-    } catch (e) {
-      console.error("Error al cerrar la oferta:", e.message);
-    }
-  };
-
-  // Si la oferta está cerrada, no se renderiza
-  if (estado === "cerrada") {
-    return null;
-  }
-
+const OfertaDemandante = ({ oferta, accion, apuntada }) => {
   return (
     <div className="container-oferta">
       <div className="condiciones-oferta">
-        {/* Mostrar la fecha de publicación */}
+        {/* Mostrar la fecha de publicación de la oferta */}
         <div className="container-fecha-publi">
           <h4>Fecha publicación</h4>
           <p className="fecha-publi">{oferta.fecha_pub}</p>
@@ -59,13 +24,29 @@ const OfertaEmpresa = ({ oferta }) => {
           <h4>Nº de puestos</h4>
           <p className="num-puesto">{oferta.num_puesto}</p>
         </div>
-        {/* Botón para cerrar la oferta */}
+        {/* Botones para inscribirse o desinscribirse de la oferta */}
         <div className="botones">
-          <button onClick={cerrarOferta}>Cerrar oferta</button>
+          {apuntada ? (
+            // Botón para desinscribirse si el usuario ya está inscrito
+            <button
+              className="desinscribirte"
+              onClick={() => accion(oferta.id)}
+            >
+              Desinscribirte
+            </button>
+          ) : (
+            // Botón para inscribirse si el usuario no está inscrito
+            <button
+              className="inscribirte"
+              onClick={() => accion(oferta.id)}
+            >
+              Inscribirte
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default OfertaEmpresa;
+export default OfertaDemandante;
