@@ -1,4 +1,5 @@
 // Este componente permite gestionar los títulos, ya sea para un demandante o para un administrador.
+import { API_URL } from "../config";
 
 import { useEffect, useState } from "react";
 import Titulo from "./Titulo";
@@ -34,7 +35,7 @@ const Titulos = ({ usuario }) => {
     // Función para obtener los títulos asociados al demandante desde el backend
     const getTitulosUsuario = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/demandantes/${usuario.id}/titulos`, {
+            const response = await fetch(`${API_URL}/demandantes/${usuario.id}/titulos`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,7 +56,7 @@ const Titulos = ({ usuario }) => {
     // Función para obtener todos los títulos disponibles desde el backend
     const getTitulos = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/titulos`, {
+            const response = await fetch(`${API_URL}/api/titulos`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,8 +82,8 @@ const Titulos = ({ usuario }) => {
             // Determinar el endpoint según el tipo de usuario
             const endpoint =
                 tipo === "demandante"
-                    ? `http://localhost:8000/api/demandantes/${usuario.id}/titulos`
-                    : `http://localhost:8000/api/titulos`;
+                    ? `${API_URL}/api/demandantes/${usuario.id}/titulos`
+                    : `${API_URL}/api/titulos`;
 
             const response = await fetch(endpoint, {
                 method: "POST",
