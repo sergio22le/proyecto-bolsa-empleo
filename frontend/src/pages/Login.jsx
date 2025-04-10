@@ -42,7 +42,7 @@ function Login() {
           sessionStorage.setItem("tipo", tipoUsuario);
 
           // Redirigir al usuario a la página principal
-          window.location.href = `http://localhost:5173/home`;
+          window.location.href = `${API_URL}/home`;
           console.log(idUsuario);
         }
       } else {
