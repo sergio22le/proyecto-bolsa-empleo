@@ -149,7 +149,7 @@ const OfertasEmpresa = () => {
       obtenerOfertas();
       setCargando(false);
     }
-  }, [empresa]);
+  }, [empresa, estado]);
 
   return (
     <div>

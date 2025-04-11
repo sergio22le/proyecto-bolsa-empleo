@@ -1,6 +1,8 @@
 // Este componente representa la página principal para las empresas.
 import { API_URL } from "../config";
+
 import { useEffect, useState } from "react";
+
 import Solicitudes from "../components/Solicitudes";
 import Demandantes from "../components/Demandantes";
 import OfertasEmpresa from "../components/OfertasEmpresa";
