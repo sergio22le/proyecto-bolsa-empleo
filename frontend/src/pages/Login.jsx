@@ -1,5 +1,6 @@
 
 import { API_URL } from "../config";
+
 import { useState } from "react";
 
 function Login() {
@@ -42,7 +43,7 @@ function Login() {
           sessionStorage.setItem("tipo", tipoUsuario);
 
           // Redirigir al usuario a la página principal
-          window.location.href = `${API_URL}/home`;
+          window.location.href = `/home`;
           console.log(idUsuario);
         }
       } else {

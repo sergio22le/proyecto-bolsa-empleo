@@ -1,5 +1,7 @@
 // Este componente permite a los usuarios actualizar su perfil personal.
+
 import { API_URL } from "../config";
+
 import React, { useState } from "react";
 
 const Perfil = ({ usuario }) => {

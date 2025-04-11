@@ -1,5 +1,6 @@
 // Este componente maneja el registro de usuarios (demandantes o empresas).
 import { API_URL } from "../config";
+
 import React, { useState } from "react";
 
 const Registro = () => {
@@ -82,7 +83,7 @@ const Registro = () => {
 
       if (response.ok) {
         alert("Registro exitoso. Ya puedes iniciar sesión.");
-        window.location.href = `http://localhost:5173`;
+        window.location.href = `/`;
       } else if (data.errors) {
         setErrors(data.errors); // Capturar errores de validación
       } else {

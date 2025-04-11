@@ -1,6 +1,8 @@
 // Este componente representa la página principal para los demandantes.
 import { API_URL } from "../config.js";
+
 import { useEffect, useState } from "react";
+
 import Perfil from "../components/Perfil.jsx";
 import OfertasDemandante from "../components/OfertasDemandante.jsx";
 import Titulos from "../components/Titulos.jsx";
