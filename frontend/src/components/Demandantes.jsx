@@ -1,6 +1,7 @@
 // Este componente permite a las empresas gestionar sus ofertas y buscar candidatos para inscribirlos.
 
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 const Demandantes = ({ usuario }) => {
     // Estado para almacenar las ofertas abiertas de la empresa
@@ -21,7 +22,7 @@ const Demandantes = ({ usuario }) => {
     // Función para obtener las ofertas abiertas de la empresa desde el backend
     const getOfertas = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/ofertas`, {
+            const response = await fetch(`${API_URL}/ofertas`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const Demandantes = ({ usuario }) => {
     const getCandidatos = async (idOferta) => {
         try {
             const response = await fetch(
-                `http://localhost:8000/api/ofertas/candidatos/${idOferta}`,
+                `${API_URL}/ofertas/candidatos/${idOferta}`,
                 {
                     method: "GET",
                     headers: {
@@ -82,7 +83,7 @@ const Demandantes = ({ usuario }) => {
     const getPostulantes = async (idOferta) => {
         try {
             const response = await fetch(
-                `http://localhost:8000/api/ofertas/postulantes/${idOferta}`,
+                `${API_URL}/ofertas/postulantes/${idOferta}`,
                 {
                     method: "GET",
                     headers: {
@@ -106,7 +107,7 @@ const Demandantes = ({ usuario }) => {
     const inscribirDemandante = async (idDemandante, idOferta) => {
         try {
             const response = await fetch(
-                `http://localhost:8000/api/ofertas/inscribir`,
+                `${API_URL}/ofertas/inscribir`,
                 {
                     method: "POST",
                     headers: {

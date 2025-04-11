@@ -1,6 +1,9 @@
 // Este componente representa la página principal para los demandantes.
 
+import { API_URL } from "../config";
+
 import { useEffect, useState } from "react";
+
 import Perfil from "../components/Perfil.jsx";
 import OfertasDemandante from "../components/OfertasDemandante.jsx";
 import Titulos from "../components/Titulos.jsx";
@@ -21,7 +24,7 @@ const HomeDemandante = () => {
     // Función para obtener los datos del usuario desde el backend
     const obtenerUsuario = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/user", {
+            const response = await fetch(`${API_URL}/user`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,5 +1,7 @@
 // Este componente muestra genera y maneja las ofertas de una empresa
 
+import { API_URL } from "../config";
+
 import { useEffect, useState } from "react";
 import OfertaEmpresa from "./OfertaEmpresa";
 
@@ -26,7 +28,7 @@ const OfertasEmpresa = () => {
   const obtenerEmpresa = async () => {
     setCargando(true);
     try {
-      const response = await fetch("http://localhost:8000/api/user", {
+      const response = await fetch(`${API_URL}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +50,7 @@ const OfertasEmpresa = () => {
   const obtenerOfertas = async () => {
     setCargando(true);
     try {
-      const response = await fetch("http://localhost:8000/api/ofertas", {
+      const response = await fetch(`${API_URL}/ofertas`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +76,7 @@ const OfertasEmpresa = () => {
   const obtenerTitulos = async () => {
     setCargando(true);
     try {
-      const response = await fetch("http://localhost:8000/api/titulos", {
+      const response = await fetch(`${API_URL}/titulos`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +120,7 @@ const OfertasEmpresa = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8000/api/ofertas", {
+      const response = await fetch(`${API_URL}/ofertas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,7 +151,7 @@ const OfertasEmpresa = () => {
       obtenerOfertas();
       setCargando(false);
     }
-  }, [empresa]);
+  }, [empresa, estado]);
 
   return (
     <div>

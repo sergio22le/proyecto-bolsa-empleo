@@ -1,5 +1,7 @@
 // Este componente muestra las solicitudes asociadas a las ofertas de una empresa.
 
+import { API_URL } from "../config";
+
 import { useEffect, useState } from "react";
 import Solicitud from "./Solicitud";
 
@@ -13,7 +15,7 @@ const Solicitudes = ({ usuario }) => {
     // Función para obtener las ofertas desde el backend
     const obtenerOfertas = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/ofertas`, {
+            const response = await fetch(`${API_URL}/ofertas`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

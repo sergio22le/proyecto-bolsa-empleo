@@ -1,5 +1,7 @@
 // Este componente representa un título individual y muestra su información.
 
+import { API_URL } from "../config";
+
 import { useEffect, useState } from "react";
 
 const Titulo = ({ titulo, onEliminar }) => {
@@ -17,7 +19,7 @@ const Titulo = ({ titulo, onEliminar }) => {
         if (tipo === "demandante") {
             // Si el usuario es un demandante
             try {
-                const response = await fetch(`http://localhost:8000/api/titulos/${titulo.id_titulo}`, {
+                const response = await fetch(`${API_URL}/titulos/${titulo.id_titulo}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -37,7 +39,7 @@ const Titulo = ({ titulo, onEliminar }) => {
         } else if (tipo === "admin") {
             // Si el usuario es un administrador
             try {
-                const response = await fetch(`http://localhost:8000/api/titulos/${titulo.id}`, {
+                const response = await fetch(`${API_URL}/titulos/${titulo.id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -60,7 +62,7 @@ const Titulo = ({ titulo, onEliminar }) => {
     // Función para eliminar un título desde el backend
     const eliminarTitulo = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/titulos/${id}`, {
+            const response = await fetch(`${API_URL}/titulos/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

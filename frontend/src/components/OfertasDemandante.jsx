@@ -1,5 +1,7 @@
 // Este componente permite a los demandantes ver las ofertas disponibles y gestionar las ofertas en las que están inscritos.
 
+import {API_URL} from "../config";
+
 import { useEffect, useState } from "react";
 import OfertaDemandante from "./OfertaDemandante";
 
@@ -19,7 +21,7 @@ const OfertasDemandante = () => {
   // Función para obtener los datos del usuario desde el backend
   const obtenerUsuario = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/user", {
+      const response = await fetch(`${API_URL}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +44,7 @@ const OfertasDemandante = () => {
     if (!usuario.id) return;
     try {
       const response = await fetch(
-        `http://localhost:8000/api/demandantes/ofertas/${usuario.id}`,
+        `${API_URL}/demandantes/ofertas/${usuario.id}`,
         {
           method: "GET",
           headers: {
@@ -71,7 +73,7 @@ const OfertasDemandante = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/demandantes/${usuario.id}`,
+        `${API_URL}/demandantes/${usuario.id}`,
         {
           method: "GET",
           headers: {
@@ -95,7 +97,7 @@ const OfertasDemandante = () => {
   const inscribirte = async (idOferta) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/ofertas/inscribir/`,
+        `${API_URL}/ofertas/inscribir/`,
         {
           method: "POST",
           headers: {
@@ -134,7 +136,7 @@ const OfertasDemandante = () => {
   const desinscribirte = async (idOferta) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/ofertas/desinscribir/`,
+        `${API_URL}/ofertas/desinscribir/`,
         {
           method: "DELETE",
           headers: {

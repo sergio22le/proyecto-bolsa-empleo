@@ -1,4 +1,4 @@
-
+import { API_URL } from "../config.js"; // Importar la URL de la API desde el archivo de configuración
 
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ function Login() {
 
     try {
       // Realizar la solicitud al backend para autenticar al usuario
-      const response = await fetch("http://localhost:8000/api/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, password }), // Enviar el usuario y la contraseña
@@ -42,7 +42,7 @@ function Login() {
           sessionStorage.setItem("tipo", tipoUsuario);
 
           // Redirigir al usuario a la página principal
-          window.location.href = `http://localhost:5173/home`;
+          window.location.href = `/home`;
           console.log(idUsuario);
         }
       } else {

@@ -1,5 +1,6 @@
 // Este componente representa una oferta individual creada por una empresa y permite gestionarla.
 
+import { API_URL } from "../config";
 
 import { useState } from "react";
 
@@ -13,7 +14,7 @@ const OfertaEmpresa = ({ oferta }) => {
   // Función para cerrar una oferta
   const cerrarOferta = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/ofertas/cerrar/${oferta.id}`, {
+      const response = await fetch(`${API_URL}/ofertas/cerrar/${oferta.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
