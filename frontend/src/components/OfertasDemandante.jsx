@@ -91,42 +91,55 @@ const OfertasDemandante = () => {
     }
   };
 
-  // Función para inscribirse en una oferta
   const inscribirte = async (idOferta) => {
     try {
-      const response = await fetch(
-        `${API_URL}/ofertas/inscribir/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenUsuario}`,
-          },
-          body: JSON.stringify({
-            id_oferta: idOferta,
-            id_demandante: usuario.id,
-          }),
-        }
-      );
-
+      // Registrar las variables clave
+      console.log("API_URL:", API_URL);
+      console.log("Token del usuario:", tokenUsuario);
+      console.log("ID del demandante:", usuario?.id);
+      console.log("ID de la oferta:", idOferta);
+  
+      // Realizar la solicitud al backend
+      const response = await fetch(`${API_URL}/ofertas/inscribir/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUsuario}`,
+        },
+        body: JSON.stringify({
+          id_oferta: idOferta,
+          id_demandante: usuario.id,
+        }),
+      });
+  
+      // Registrar la respuesta completa del servidor
+      console.log("Respuesta completa del servidor:", response);
+  
+      // Intentar convertir la respuesta a JSON
+      const data = await response.json();
+      console.log("Datos recibidos del servidor:", data);
+  
       if (response.ok) {
         console.log("Te has inscrito en la oferta:", idOferta);
-
+  
         // Actualizar las ofertas disponibles y las ofertas inscritas
         setOfertasDisponibles((prev) =>
           prev.filter((oferta) => oferta.id !== idOferta)
         );
-
+  
         const ofertaInscrita = ofertasDisponibles.find(
           (oferta) => oferta.id === idOferta
         );
-
+  
         if (ofertaInscrita) {
           setOfertasApuntado((prev) => [...prev, { oferta: ofertaInscrita }]);
         }
+      } else {
+        console.error("Error en la respuesta del servidor:", data.message || "Sin mensaje de error");
       }
     } catch (e) {
-      console.log("Error al inscribirse:", e.message);
+      // Registrar cualquier error que ocurra
+      console.error("Error al inscribirse:", e.message);
     }
   };
 
