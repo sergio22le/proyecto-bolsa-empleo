@@ -1,5 +1,4 @@
 // Este componente muestra las solicitudes asociadas a las ofertas de una empresa.
-
 import { API_URL } from "../config";
 
 import { useEffect, useState } from "react";

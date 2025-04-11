@@ -1,7 +1,5 @@
 // Este componente representa un título individual y muestra su información.
-
 import { API_URL } from "../config";
-
 import { useEffect, useState } from "react";
 
 const Titulo = ({ titulo, onEliminar }) => {

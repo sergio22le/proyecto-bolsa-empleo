@@ -1,7 +1,5 @@
 // Este componente permite a los demandantes ver las ofertas disponibles y gestionar las ofertas en las que están inscritos.
-
-import {API_URL} from "../config";
-
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 import OfertaDemandante from "./OfertaDemandante";
 
@@ -21,7 +19,7 @@ const OfertasDemandante = () => {
   // Función para obtener los datos del usuario desde el backend
   const obtenerUsuario = async () => {
     try {
-      const response = await fetch(`${API_URL}/user`, {
+      const response = await fetch (`${API_URL}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

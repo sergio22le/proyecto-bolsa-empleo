@@ -1,4 +1,5 @@
-import { API_URL } from "../config.js"; // Importar la URL de la API desde el archivo de configuración
+
+import { API_URL } from "../config";
 
 import { useState } from "react";
 

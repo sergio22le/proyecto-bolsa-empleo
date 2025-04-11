@@ -1,7 +1,6 @@
 // Este componente representa una oferta individual creada por una empresa y permite gestionarla.
 
 import { API_URL } from "../config";
-
 import { useState } from "react";
 
 const OfertaEmpresa = ({ oferta }) => {

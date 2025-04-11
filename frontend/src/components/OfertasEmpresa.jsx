@@ -1,7 +1,5 @@
 // Este componente muestra genera y maneja las ofertas de una empresa
-
 import { API_URL } from "../config";
-
 import { useEffect, useState } from "react";
 import OfertaEmpresa from "./OfertaEmpresa";
 

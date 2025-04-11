@@ -1,5 +1,4 @@
 // Este componente muestra los postulantes asociados a una oferta y permite adjudicar o rechazar postulantes.
-
 import { API_URL } from "../config";
 
 import { useEffect, useState } from "react";

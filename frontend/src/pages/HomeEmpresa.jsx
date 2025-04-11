@@ -1,5 +1,4 @@
 // Este componente representa la página principal para las empresas.
-
 import { API_URL } from "../config";
 
 import { useEffect, useState } from "react";

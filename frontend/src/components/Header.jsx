@@ -1,7 +1,5 @@
 // Este componente representa el encabezado de la aplicación, mostrando el título y un botón para cerrar sesión si el usuario está autenticado.
-
 import { API_URL } from "../config";
-
 import React, { useState, useEffect } from "react";
 
 const Header = () => {

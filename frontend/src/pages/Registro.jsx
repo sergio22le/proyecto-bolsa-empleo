@@ -1,7 +1,7 @@
 // Este componente maneja el registro de usuarios (demandantes o empresas).
+import { API_URL } from "../config";
 
 import React, { useState } from "react";
-import { API_URL } from "../config";
 
 const Registro = () => {
   // Estado para determinar el tipo de registro (demandante o empresa)

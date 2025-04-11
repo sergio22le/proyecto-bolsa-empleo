@@ -1,7 +1,5 @@
 // Este componente muestra las empresas pendientes de verificación y permite validarlas o rechazarlas.
-
 import { API_URL } from "../config";
-
 import { useEffect, useState } from "react";
 import Empresa from "./Empresa";
 

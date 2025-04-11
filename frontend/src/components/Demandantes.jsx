@@ -1,7 +1,6 @@
 // Este componente permite a las empresas gestionar sus ofertas y buscar candidatos para inscribirlos.
-
-import { useEffect, useState } from "react";
 import { API_URL } from "../config";
+import { useEffect, useState } from "react";
 
 const Demandantes = ({ usuario }) => {
     // Estado para almacenar las ofertas abiertas de la empresa

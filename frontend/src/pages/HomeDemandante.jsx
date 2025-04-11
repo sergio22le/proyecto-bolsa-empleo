@@ -1,6 +1,5 @@
 // Este componente representa la página principal para los demandantes.
-
-import { API_URL } from "../config";
+import { API_URL } from "../config.js";
 
 import { useEffect, useState } from "react";
 
